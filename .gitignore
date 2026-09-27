@@ -1,0 +1,7 @@
+# Bản dựng: GitHub Actions dựng lại mỗi lần đẩy lên, không giữ trong git.
+/dist/
+
+# Đệm lib/hanyu.php và zh-svo/data.php ghi cạnh trang lúc dựng.
+/src/zh-*/.cache.json
+/src/zh-*/.parse.json
+*.tmp

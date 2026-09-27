@@ -1,0 +1,553 @@
+/* Ghi chú 21 động từ đặc biệt. Thứ tự phải khớp DATA[0..20] trong
+   verbs-data.js, vì thanh bên bấm động từ thứ i thì mở ghi chú thứ i. Đó là
+   ràng buộc duy nhất nối hai file — không còn khoá chỉ số nào nữa.
+
+   Từng có khoá gi trỏ ngược vào DATA để phục vụ nút "Xem khung câu trên đồ thị".
+   Nút đó đã bỏ khi phần ghi chú dọn vào chung panel với đồ thị, nên gi cũng gỡ
+   theo thay vì để nằm chết.
+
+   Các khoá, đúng thứ tự graph.js vẽ ra:
+     use  bắt buộc — [nhãn, giải thích kèm ví dụ]
+     tb   bảng tóm tắt — [cấu trúc, ý nghĩa, VÍ DỤ]   cột ví dụ không được bỏ trống
+     st   cấu trúc đặc biệt — [mẫu, giải thích, ví dụ] ví dụ in nghiêng, "" thì
+          graph.js lặng lẽ bỏ ô đó đi, nên đừng để trống
+     ph   phrasal verb — [cụm, nghĩa]
+     id   thành ngữ — [cụm, nghĩa]
+
+   Mỗi mục use nên kèm ít nhất một câu trọn vẹn: người học cần thấy từ đứng
+   trong câu thật chứ không phải một danh sách cụm từ rời. */
+window.SVO_OMNI = (function(){
+  const OMNI = [
+    {
+      v:"do", gloss:"Làm, thực hiện",
+      intro:"Khác với <b>Make</b>, <b>Do</b> tập trung vào <b>quá trình</b>, những công việc lặp đi lặp lại hoặc những hoạt động chung chung. Nó còn là trợ động từ gánh cả câu hỏi lẫn câu phủ định, và đứng thay cho một động từ vừa nhắc để khỏi lặp.",
+      use:[
+        ["Việc nhà","Do the laundry, do the dishes, do the housework. — <b>I’ll do the dishes</b> if you cook."],
+        ["Công việc / Học tập","Do homework, do a course, do business. — <b>She does business with Japan.</b>"],
+        ["Chăm sóc bản thân","Do your hair (làm tóc), do your nails, do your teeth. — <b>Give me ten minutes to do my hair.</b>"],
+        ["Làm tốt / làm tệ","<code>do well · do badly</code> — <b>He did well in the exam.</b> · <b>The shop is doing badly.</b>"],
+        ["Trợ động từ","Hỏi, phủ định, nhấn mạnh: <b>Do</b> you know her? · I <b>don’t</b> smoke. · I <b>do</b> like it! (thật sự thích)"],
+        ["Đứng thay động từ đã nhắc","Khỏi lặp lại cả cụm: <b>She works harder than I do.</b> — <em>do</em> thay cho <em>work</em>. · “Who broke it?” — “I <b>did</b>.”"],
+        ["Cụm từ thay thế","Do your best (cố hết sức), do me a favour (giúp một tay), do someone good (có ích cho ai)."]
+      ],
+      tb:[["do + danh từ chỉ việc","Làm một công việc, một hoạt động","She <b>does</b> the shopping on Friday."],
+          ["do + trợ động từ","Hỏi, phủ định, nhấn mạnh","<b>Did</b> you call him?"],
+          ["do + đứng thay động từ","Khỏi lặp lại động từ vừa nói","He runs faster than I <b>do</b>."],
+          ["do well / badly","Làm tốt hay tệ","They <b>did</b> badly this year."]],
+      st:[["What I did was + V","Đưa hành động ra trước để nhấn mạnh.","<em>What I did was call the police.</em>"],
+          ["All you have to do is + V","Chỉ việc làm mỗi thế thôi.","<em>All you have to do is press this button.</em>"],
+          ["do the + V-ing","Việc nhà lặp đi lặp lại, nói như một danh từ.","<em>I hate doing the washing-up.</em>"]],
+      ph:[["Do up","Cài, buộc (áo, dây giày) — hoặc sửa sang lại nhà cửa.","Do up your coat, it's cold outside."],
+          ["Do without","Xoay xở khi không có thứ gì đó.","We'll have to do without a car for a while."],
+          ["Do away with","Bỏ hẳn, dẹp đi (luật lệ, thói quen).","The school did away with uniforms last year."],
+          ["Do over","Làm lại từ đầu.","The teacher made me do the essay over."]],
+      id:[["do one’s best","Cố hết sức mình."],
+          ["do the trick","Ăn thua, giải quyết được việc."],
+          ["That will do","Thế là đủ rồi / thôi đi."],
+          ["have nothing to do with","Không liên quan gì tới."],
+          ["do someone good","Có ích cho ai đó."]]
+    },
+    {
+      v:"get", gloss:"Nhận, mua, trở nên, hiểu, đến",
+      intro:"Thay vì dùng các động từ chuyên biệt, người bản ngữ thường dùng <b>Get</b> cho tự nhiên. Nghĩa của nó gần như hoàn toàn do thứ đứng sau quyết định — danh từ, tính từ, nơi chốn hay phân từ.",
+      use:[
+        ["Get = Receive","Nhận: get a gift, get an email. — <b>I got a letter from her yesterday.</b>"],
+        ["Get = Buy","Mua: get some milk, get a new phone. — <b>Can you get some bread on the way home?</b>"],
+        ["Get = Become","Đổi trạng thái: get hungry, get married, get dark. — <b>It’s getting cold.</b>"],
+        ["Get = Understand","Hiểu: <b>I get it!</b> · <b>Sorry, I didn’t get your name.</b>"],
+        ["Get = Arrive","Đến nơi: get home, get to school. — <b>What time did you get to the office?</b>"],
+        ["Get = Fetch","Đi lấy về: <b>Get me a chair, please.</b> · <b>I’ll get the door.</b>"],
+        ["Get + V3/ed = bị động nói miệng","Nghe đời thường hơn <em>be</em>: <b>He got fired.</b> · <b>My bike got stolen.</b>"]
+      ],
+      ph:[["Get up","Thức dậy, rời giường.","I get up at six every morning."],["Get along (with)","Hòa hợp với ai đó.","She gets along with everyone at work."],["Get over","Vượt qua (cú sốc, căn bệnh).","It took him months to get over the flu."],
+          ["Get by","Xoay xở để sống qua ngày.","We can get by on very little money."],["Get away","Trốn thoát, hoặc đi nghỉ.","The thief got away before the police arrived."],
+          ["Get on / off","Lên / xuống (xe buýt, tàu hỏa, máy bay).","Get on the bus at the next stop."],["Get in / out of","Lên / xuống (xe hơi, taxi).","She got out of the taxi and paid the driver."],
+          ["Get back to","Trả lời lại ai sau.","I'll get back to you tomorrow."],["Get through","Vượt qua được, hoặc gọi điện thông máy.","I couldn't get through to her all morning."],
+          ["Get rid of","Tống khứ, bỏ đi.","It's time to get rid of these old shoes."]],
+      st:[["Get + someone + TO do something","Nhờ, thuyết phục hoặc thuê người khác làm.","<em>I got him to fix my car.</em>"],
+          ["Get + something + DONE (V3/ed)","Việc được làm cho mình.","<em>I got my hair cut.</em>"],
+          ["Get + V-ing","Bắt đầu làm, thường giục giã.","<em>We’d better get going.</em>"],
+          ["have got","Lối nói thường ngày của <em>have</em> — sở hữu, hoặc phải làm.","<em>I’ve got two sisters. · I’ve got to go.</em>"]],
+      id:[["Get on someone’s nerves","Làm ai đó phát bực."],["Get lost!","Biến đi!"],
+          ["Get a life","Lo việc của mình đi."],["Get real","Hãy thực tế đi."],
+          ["Get the hang of","Bắt đầu quen tay, làm được."],["Get cold feet","Đâm ra chùn bước."]],
+      tb:[["Get + Adjective","Trở nên như thế nào","It’s <b>getting</b> cold."],
+          ["Get + Noun","Có được / mua được","Can you <b>get</b> some bread?"],
+          ["Get + Place","Đi đến đâu","How do I <b>get</b> to the station?"],
+          ["Get + V3/ed","Bị / được (thụ động)","He <b>got</b> fired yesterday."],
+          ["Get + O + to V","Khiến ai làm gì","She <b>got</b> me to help."]]
+    },
+    {
+      v:"go", gloss:"Đi, trở nên",
+      intro:"<b>Go</b> không chỉ là di chuyển từ A đến B. Nó còn mô tả sự thay đổi trạng thái, sự việc diễn ra ra sao, và cả chuyện thứ gì đó biến mất.",
+      use:[
+        ["Di chuyển","Go to school, go to work, go home (không có “to”). — <b>We’re going to the beach tomorrow.</b>"],
+        ["Hoạt động giải trí","<code>Go + V-ing</code> — go swimming, go shopping, go camping, go fishing, go hunting, go dancing, go window-shopping. — <b>They went fishing on Sunday.</b>"],
+        ["Thay đổi trạng thái","Thường là xấu đi: go gray, go bankrupt, go bad, go blind. — <b>The milk has gone bad.</b>"],
+        ["Sự việc diễn ra thế nào","<b>How did the interview go?</b> · <b>Everything went well.</b>"],
+        ["Biến mất, hết sạch","<b>My headache has gone.</b> · <b>All the money is gone.</b>"],
+        ["Chỗ cất đồ","<b>Where do these plates go?</b> (để ở đâu)"],
+        ["Sự phối hợp","<b>This tie goes with your shirt.</b> (hợp với)"]
+      ],
+      tb:[["go + to + nơi chốn","Đi đến đâu","The children <b>go</b> to school."],
+          ["go + V-ing","Đi làm hoạt động gì","We <b>went</b> swimming."],
+          ["go + tính từ","Đổi sang trạng thái, thường xấu","The milk <b>went</b> sour."],
+          ["be going to + V","Sắp, định làm","It<b>’s going to</b> rain."]],
+      st:[["go and + V (hoặc bỏ <em>and</em>)","Đi làm gì đó — lối nói thân mật.","<em>Go get your coat.</em>"],
+          ["... to go","Mang đi, không ăn tại chỗ.","<em>Two coffees to go, please.</em>"],
+          ["There goes ...","Thế là mất / thế là xong.","<em>There goes my weekend.</em>"]],
+      ph:[["Go on","Tiếp tục — hoặc chuyện gì đang xảy ra.","Go on, I'm listening."],["Go out","Đi chơi; hoặc lửa, đèn tắt.","We went out for dinner last night."],
+          ["Go over","Xem lại, rà kỹ.","Let's go over the plan one more time."],["Go off","Chuông reo, bom nổ — hoặc đồ ăn hỏng.","My alarm went off at five."],
+          ["Go through","Trải qua chuyện khó; hoặc lục soát kỹ.","She went through a difficult year."],["Go back","Quay trở lại.","I'd love to go back to Japan."],
+          ["Go up / down","Tăng lên / giảm xuống.","Prices went up again this month."],["Go ahead","Cứ tự nhiên, làm đi.","Go ahead and start without me."],
+          ["Go with","Hợp với, đi cùng bộ.","Does this scarf go with my coat?"]],
+      id:[["go without saying","Khỏi nói cũng biết."],["go for it","Cứ làm tới đi."],
+          ["from the word go","Ngay từ đầu."],["be on the go","Bận luôn chân luôn tay."],
+          ["go too far","Làm quá lố."]]
+    },
+    {
+      v:"have", gloss:"Có, trải nghiệm, ăn uống",
+      intro:"<b>Have</b> cực kỳ linh hoạt vì nó vừa là động từ chính, vừa là trợ động từ trong các thì hoàn thành. Với một danh từ hành động đứng sau, nó còn đứng thay cả động từ: <em>have a look</em> chính là <em>look</em>.",
+      use:[
+        ["Sở hữu","Have a car, have a dog, have blue eyes. — <b>She has two brothers.</b>"],
+        ["Ăn uống","Have breakfast, have a coffee, have a drink. — <b>Let’s have lunch together.</b>"],
+        ["Trải nghiệm / Sự kiện","Have a good time, have a chat, have an accident. — <b>We had a party last night.</b>"],
+        ["Sức khỏe","Have a headache, have a cold, have a fever. — <b>I have a terrible headache.</b>"],
+        ["Rỗng nghĩa — thay cho cả động từ","Have a look, have a rest, have a try, have a swim. — <b>Have a look at this.</b>"],
+        ["Trợ động từ — thì hoàn thành","<b>I have finished.</b> · <b>She had already left when I arrived.</b>"]
+      ],
+      tb:[["S + have + danh từ","Sở hữu hoặc trải nghiệm","They <b>have</b> two children."],
+          ["have + V3/ed","Thì hoàn thành (trợ động từ)","I <b>have</b> seen it before."],
+          ["have to + V","Bắt buộc phải","You <b>have to</b> wear a helmet."],
+          ["have + O + V3/ed","Nhờ, thuê người làm cho mình","I <b>had</b> my car washed."],
+          ["have + O + V nguyên thể","Sai, bảo ai làm","She <b>had</b> him wait outside."]],
+      st:[["have to do something","Phải làm gì đó — bắt buộc từ bên ngoài, khác <em>must</em> là tự thấy cần.","<em>I have to work on Saturday.</em>"],
+          ["have something done","Thuê hoặc nhờ người khác làm cho mình.","<em>We had the roof repaired.</em>"],
+          ["have someone do something","Sai, bảo ai đó làm.","<em>The teacher had us write an essay.</em>"],
+          ["had better + V","Tốt hơn là nên — lời khuyên kèm chút cảnh báo.","<em>You’d better see a doctor.</em>"]],
+      ph:[["Have on","Đang mặc, đang đeo, đang bật.","She had a red coat on."],["Have over / round","Mời ai tới nhà chơi.","We had some friends over for dinner."],
+          ["Have someone on","Trêu, chọc ai.","Don't believe him, he's having you on."],["Have it out with","Nói cho ra lẽ với ai.","I finally had it out with my neighbour."]],
+      id:[["have a word with","Nói riêng với ai một câu."],["have had enough","Chịu hết nổi rồi."],
+          ["have no idea","Chịu, chẳng biết gì."],["have a sweet tooth","Hảo ngọt."],
+          ["have one’s hands full","Bận ngập đầu."]]
+    },
+    {
+      v:"keep", gloss:"Giữ, duy trì",
+      intro:"<b>Keep</b> diễn tả việc duy trì một trạng thái, một hành động, hoặc sở hữu thứ gì đó lâu dài. Điểm đáng nhớ: sau <em>keep</em> là tính từ hoặc V-ing, không phải động từ nguyên thể.",
+      use:[
+        ["Duy trì trạng thái","<code>Keep + tính từ</code> — keep calm, keep quiet, keep warm. — <b>Please keep quiet.</b>"],
+        ["Tiếp tục hành động","<code>Keep + V-ing</code> — <b>He keeps asking me the same question.</b>"],
+        ["Giữ cho cái gì ở trạng thái nào","<code>Keep + O + tính từ</code> — <b>Keep the door open.</b>"],
+        ["Lưu giữ / Cất giữ","Keep a secret, keep a promise. — <b>Keep the change.</b> (khỏi thối tiền lẻ)"],
+        ["Ghi chép","Keep a diary, keep a record. — <b>She has kept a diary since she was ten.</b>"],
+        ["Nuôi, chăm","<b>They keep chickens.</b> · <b>Who keeps the garden?</b>"]
+      ],
+      tb:[["keep + tính từ","Giữ nguyên một trạng thái","Please <b>keep</b> quiet."],
+          ["keep + V-ing","Cứ tiếp tục làm","He <b>keeps</b> asking me."],
+          ["keep + O + tính từ","Giữ cho cái gì thế nào","<b>Keep</b> the door open."],
+          ["keep + O + from V-ing","Ngăn không cho làm","The noise <b>kept</b> me from sleeping."]],
+      st:[["keep someone waiting","Bắt ai phải chờ.","<em>Sorry to keep you waiting.</em>"],
+          ["keep on + V-ing","Cứ làm mãi, nhấn mạnh sự dai dẳng.","<em>She kept on talking.</em>"],
+          ["keep + O + to yourself","Giữ riêng, không nói ra.","<em>Keep your opinions to yourself.</em>"]],
+      ph:[["Keep up with","Theo kịp ai đó, cái gì đó.","I can't keep up with you, slow down!"],["Keep away","Tránh xa ra.","Keep away from the edge."],
+          ["Keep on","Tiếp tục làm, nhấn mạnh sự bền bỉ.","He kept on asking until I answered."],["Keep out","Không được vào.","Keep out — staff only."],
+          ["Keep off","Tránh, kiêng (keep off the grass).","Please keep off the grass."],["Keep back","Lùi lại; hoặc giấu bớt.","Keep back, the road is not safe."],
+          ["Keep up","Duy trì (keep up the good work).","Keep up the good work."]],
+      id:[["keep an eye on","Trông chừng giúp."],["keep in touch","Giữ liên lạc."],
+          ["keep your word","Giữ lời hứa."],["keep it down","Nói nhỏ thôi."],
+          ["keep a straight face","Cố nín cười."]]
+    },
+    {
+      v:"look", gloss:"Nhìn, có vẻ như",
+      intro:"Ngoài nghĩa nhìn bằng mắt, <b>Look</b> là động từ then chốt để mô tả cảm nhận và tra cứu thông tin. Nhớ ba từ dễ lẫn: <em>look</em> là chủ động đưa mắt, <em>see</em> là thấy, <em>watch</em> là dõi theo cái đang động.",
+      use:[
+        ["Nhìn có chủ ý","<code>look at</code> — <b>Look at this photo.</b> Luôn cần <em>at</em> khi có tân ngữ."],
+        ["Miêu tả vẻ bề ngoài","<code>Look + tính từ</code> — <b>You look tired.</b> · <b>She looks happy today.</b>"],
+        ["Giống gì đó","<code>Look like + danh từ</code> — <b>It looks like rain.</b> · <b>He looks like his father.</b>"],
+        ["Có vẻ như là","<code>Look as if / as though + mệnh đề</code> — <b>It looks as if they’ve left.</b>"],
+        ["Hướng ra","<b>The window looks onto the garden.</b>"],
+        ["Gọi chú ý","<b>Look, I’m sorry.</b> · <b>Look out!</b> (coi chừng)"]
+      ],
+      tb:[["look at + O","Nhìn có chủ ý","<b>Look at</b> the board."],
+          ["look + tính từ","Trông thế nào","She <b>looks</b> happy."],
+          ["look like + danh từ","Trông giống ai, giống cái gì","He <b>looks like</b> his father."],
+          ["look as if + mệnh đề","Có vẻ như là","It <b>looks as if</b> it will rain."]],
+      st:[["look + tính từ, KHÔNG dùng trạng từ","<em>look</em> ở đây là động từ nối, nên đi với tính từ.","<em>She looks good.</em> — không phải <em>looks well</em> khi nói về vẻ ngoài."],
+          ["look forward to + V-ing","Mong đợi. <em>to</em> là giới từ, nên sau nó là V-ing chứ không phải nguyên thể.","<em>I look forward to hearing from you.</em>"]],
+      ph:[["Look for","Tìm kiếm.","I'm looking for my keys."],["Look after","Chăm sóc (như take care of).","Could you look after my cat this weekend?"],
+          ["Look forward to","Mong đợi điều gì đó.","I look forward to hearing from you."],["Look up","Tra cứu (từ điển, thông tin).","Look the word up in a dictionary."],
+          ["Look into","Điều tra, xem xét kỹ.","The company is looking into the complaint."],["Look out","Coi chừng!","Look out — there's a car coming!"],
+          ["Look up to","Kính trọng, ngưỡng mộ.","He has always looked up to his sister."],["Look down on","Coi thường.","Don't look down on people who have less."],
+          ["Look through","Xem lướt qua.","She looked through the report quickly."],["Look around","Ngó quanh, đi xem một vòng.","We looked around the museum for an hour."]],
+      id:[["look on the bright side","Nhìn mặt tích cực."],["by the look of it","Xem chừng thì."],
+          ["look someone in the eye","Nhìn thẳng vào mắt ai."],["never look back","Từ đó cứ tiến lên mãi."]]
+    },
+    {
+      v:"make", gloss:"Tạo ra, tạo nên",
+      intro:"<b>Make</b> tập trung vào <b>kết quả</b>, vào việc tạo ra cái gì đó trước đó chưa có. Nó cũng là động từ chủ chốt của khung “bắt ai làm gì” — và ở thể bị động thì phải thêm <em>to</em>.",
+      use:[
+        ["Tạo ra đồ vật","Make a cake, make a cup of tea. — <b>She made a beautiful dress.</b>"],
+        ["Giao tiếp / Âm thanh","Make a speech, make a noise, make a phone call. — <b>Don’t make so much noise.</b>"],
+        ["Kế hoạch / Lựa chọn","Make a plan, make a mistake, make a decision. — <b>I made a mistake.</b>"],
+        ["Gây ra cảm xúc","<code>Make + ai + tính từ</code> — <b>You make me happy.</b>"],
+        ["Bắt ai làm gì","<code>Make + ai + V</code> — <b>He made me wait for an hour.</b>"],
+        ["Bầu, cử, trở thành","<b>They made him captain.</b> · <b>She’ll make a good teacher.</b>"],
+        ["Kiếm được","<b>He makes $5,000 a month.</b>"]
+      ],
+      tb:[["make + danh từ","Tạo ra, gây ra","She <b>made</b> a cake."],
+          ["make + O + tính từ","Làm cho ai, cái gì thế nào","You <b>make</b> me happy."],
+          ["make + O + V nguyên thể","Bắt ai làm gì","He <b>made</b> me wait."],
+          ["be made to + V","Bị bắt làm — bị động thì có <em>to</em>","I <b>was made to</b> wait."],
+          ["make + O + danh từ","Bầu, cử ai làm gì","They <b>made</b> him captain."]],
+      st:[["make someone do something","Bắt buộc, không cho chọn. Bị động phải thêm <em>to</em>.","<em>They made him sign. → He was made to sign.</em>"],
+          ["make it","Đến kịp, xoay xở được, thành công.","<em>Sorry, I can’t make it tonight.</em>"],
+          ["make do (with)","Tạm xoay xở với cái đang có.","<em>We’ll have to make do with bread.</em>"],
+          ["make sure (that)","Lo cho chắc chắn là.","<em>Make sure you lock the door.</em>"]],
+      ph:[["Make up","Bịa ra; làm lành; trang điểm.","He made up an excuse about the traffic."],["Make out","Nhìn ra, nghe ra được.","I couldn't make out what she was saying."],
+          ["Make up for","Bù đắp lại.","Let me buy you lunch to make up for it."],["Make for","Đi về phía.","They made for the exit as soon as it ended."],
+          ["Make off with","Cuỗm đi, ôm của chạy.","Someone made off with my umbrella."]],
+      id:[["make sense","Hợp lý, nghe lọt tai."],["make a difference","Tạo ra khác biệt."],
+          ["make up your mind","Quyết đi."],["make ends meet","Kiếm vừa đủ sống."],
+          ["make a living","Kiếm sống."],["make yourself at home","Cứ tự nhiên như ở nhà."]]
+    },
+    {
+      v:"put", gloss:"Đặt, để",
+      intro:"Tương tự như <b>Set</b>, nhưng <b>Put</b> thường dùng cho hành động vật lý cụ thể, hoặc đặt ai đó vào tình huống nào đó. Gần như lúc nào nó cũng đòi một nơi chốn đi kèm — <em>put</em> mà không nói để đâu thì câu chưa trọn.",
+      use:[
+        ["Vị trí vật lý","<b>Put it on the table.</b> · <b>She put the milk in the fridge.</b>"],
+        ["Đặt vào tình huống","Put someone in danger, put someone at ease. — <b>It put me in a bad mood.</b>"],
+        ["Viết xuống","<b>Put your name at the top.</b> · <b>Put it on paper.</b>"],
+        ["Diễn đạt","<b>How shall I put it?</b> · <b>To put it simply, we’re out of money.</b>"],
+        ["Dồn công sức, tiền vào","<b>She put a lot of effort into it.</b>"]
+      ],
+      tb:[["put + O + nơi chốn","Đặt vào đâu","I <b>put</b> the keys on the table."],
+          ["put + O + in/into + trạng thái","Đẩy vào tình huống nào","It <b>put</b> me in a bad mood."],
+          ["put + it + trạng từ","Diễn đạt theo cách nào","<b>Put</b> it simply."],
+          ["put + tiền/công + into","Dồn vào cái gì","He <b>put</b> everything into the shop."]],
+      st:[["put someone through (to)","Nối máy cho ai — hoặc bắt ai chịu đựng chuyện gì.","<em>I’ll put you through to Sales.</em>"],
+          ["put off + V-ing","Trì hoãn; sau nó là V-ing, không phải nguyên thể.","<em>Don’t put off going to the dentist.</em>"]],
+      ph:[["Put on","Mặc vào; hoặc tăng cân.","Put on your shoes, we're leaving."],["Put off","Trì hoãn (như postpone).","They put the meeting off until Friday."],
+          ["Put out","Dập tắt (lửa, thuốc lá).","Firefighters put out the blaze in an hour."],["Put up with","Chịu đựng ai đó, cái gì đó.","I can't put up with this noise any longer."],
+          ["Put away","Cất đi cho gọn.","Put your toys away before dinner."],["Put down","Đặt xuống; hoặc hạ thấp ai.","She put the book down and looked up."],
+          ["Put back","Để lại chỗ cũ.","Put the milk back in the fridge."],["Put up","Dựng lên; hoặc cho ở nhờ.","They put up a tent near the river."],
+          ["Put together","Ráp lại, lắp lại.","It took me an hour to put the shelf together."]],
+      id:[["put your foot in it","Lỡ miệng nói hớ."],["put two and two together","Ghép lại là hiểu ra."],
+          ["stay put","Cứ ở yên đó."],["put someone on the spot","Đặt ai vào thế bí."],
+          ["put your mind to it","Dốc lòng vào là được."]]
+    },
+    {
+      v:"run", gloss:"Chạy, vận hành, quản lý",
+      intro:"Đừng chỉ hiểu <b>Run</b> là “chạy bộ”. Trong công việc và đời sống, cốt lõi của nó là “duy trì sự hoạt động” — máy chạy, công ty chạy, nước chảy, phim chiếu.",
+      use:[
+        ["Vận hành / Quản lý","Run a business, run a shop, run a course. — <b>She runs a business.</b>"],
+        ["Máy móc hoạt động","<b>The engine is running.</b> · <b>Leave the tap running.</b>"],
+        ["Sử dụng / Tiêu thụ","<b>My car runs on electricity.</b> · <b>The app runs on Windows.</b>"],
+        ["Chảy (chất lỏng)","<b>Water is running down the wall.</b> · <b>Your nose is running.</b> (sổ mũi)"],
+        ["Kéo dài bao lâu","<b>The film runs for two hours.</b> · <b>The show ran for ten years.</b>"],
+        ["Ứng cử","<b>She’s running for president.</b>"],
+        ["Chở ai một đoạn","<b>Let me run you to the station.</b>"]
+      ],
+      tb:[["run + danh từ (tổ chức)","Điều hành, quản lý","She <b>runs</b> a business."],
+          ["run (không tân ngữ)","Máy chạy, nước chảy","The engine is <b>running</b>."],
+          ["run on + nhiên liệu","Chạy bằng gì","It <b>runs on</b> diesel."],
+          ["run for + thời lượng","Kéo dài bao lâu","The film <b>runs for</b> two hours."]],
+      st:[["run out of + danh từ","Hết sạch thứ gì đó.","<em>We’ve run out of milk.</em>"],
+          ["run in the family","Đặc điểm cả nhà đều có.","<em>Red hair runs in the family.</em>"]],
+      ph:[["Run out of","Hết sạch (tiền, thời gian).","We've run out of milk again."],["Run into","Tình cờ gặp ai; hoặc đâm vào.","I ran into an old friend at the station."],
+          ["Run over","Cán qua bằng xe; hoặc xem lướt lại.","A car nearly ran over the cat."],["Run away","Chạy trốn, bỏ nhà đi.","The dog ran away during the storm."],
+          ["Run after","Đuổi theo.","She ran after the bus but missed it."],["Run through","Đọc lướt, tập dượt nhanh.","Let's run through the script once more."],
+          ["Run up","Làm nợ chồng lên (run up a bill).","He ran up a huge phone bill."]],
+      id:[["in the long run","Về lâu về dài."],["run in the family","Cả nhà đều thế."],
+          ["up and running","Đã chạy được rồi."],["run late","Đang trễ giờ."],
+          ["run a risk","Liều, chịu rủi ro."]]
+    },
+    {
+      v:"set", gloss:"Đặt, để, thiết lập",
+      intro:"Cốt lõi của <b>Set</b> là làm cho một thứ gì đó ở vào một vị trí hoặc trạng thái nhất định — và thường là cố định lại ở đó. So với <em>put</em> nghiêng về chỗ để, <em>set</em> nghiêng về việc định ra: giờ giấc, mục tiêu, kỷ lục.",
+      use:[
+        ["Thiết lập thiết bị / thông số","<b>Set an alarm for six.</b> · <b>Set the temperature to 20 degrees.</b>"],
+        ["Sắp đặt","Set the table (bày bàn ăn), set a date. — <b>Have you set a date for the wedding?</b>"],
+        ["Xác lập kỷ lục / mục tiêu","<b>She set a new world record.</b> · <b>Set yourself a goal.</b>"],
+        ["Trạng thái cố định","<b>The jelly has set.</b> (đã đông) · <b>They set fire to the building.</b>"],
+        ["Thiên nhiên","<b>The sun sets at six.</b>"],
+        ["Bối cảnh tác phẩm","<b>The film is set in Hanoi in 1954.</b>"]
+      ],
+      tb:[["set + danh từ","Định ra, lập ra","<b>Set</b> a date."],
+          ["set + O + tính từ / phân từ","Đưa vào một trạng thái","The news <b>set</b> him free."],
+          ["set (không tân ngữ)","Đông lại, hoặc lặn","The sun <b>sets</b> at six."],
+          ["be set in + nơi/thời","Bối cảnh đặt ở đâu","The film <b>is set in</b> Hanoi."]],
+      st:[["set out to + V","Bắt tay vào làm với mục đích rõ ràng.","<em>She set out to prove them wrong.</em>"],
+          ["set about + V-ing","Bắt đầu bắt tay vào việc.","<em>He set about cleaning the kitchen.</em>"]],
+      ph:[["Set up","Thành lập (công ty); lắp đặt (thiết bị).","They set up the company in 2019."],["Set off / out","Khởi hành một chuyến đi.","We set off at dawn."],
+          ["Set back","Trì hoãn; hoặc tốn kém (That car set me back $20,000).","The delay set the project back two weeks."],
+          ["Set aside","Để dành ra.","She sets aside some money every month."],["Set down","Ghi lại thành văn.","He set down his thoughts in a letter."],
+          ["Set in","Bắt đầu và kéo dài (mưa, mùa đông, nhiễm trùng).","Winter set in early this year."]],
+      id:[["set the record straight","Nói lại cho đúng."],["set your heart on","Quyết tâm muốn cho bằng được."],
+          ["set the scene","Dựng bối cảnh, mở đầu."],["be set in your ways","Cố chấp theo lối cũ."]]
+    },
+    {
+      v:"take", gloss:"Lấy đi, tốn, tiêu thụ",
+      intro:"<b>Take</b> thường diễn tả hành động di chuyển thứ gì đó từ gần ra xa, hoặc việc sử dụng thời gian và nỗ lực. Cặp đối của nó là <em>bring</em> — mang lại phía người nghe.",
+      use:[
+        ["Về thời gian","<code>It takes + thời gian + to V</code> — <b>It takes 30 minutes to cook.</b>"],
+        ["Về phương tiện","Take a bus / taxi / train. — <b>We took a taxi home.</b>"],
+        ["Hành động thường ngày (rỗng nghĩa)","Take a break, take a nap, take a shower, take notes. — <b>Let’s take a break.</b>"],
+        ["Cầm, mang đi","<b>Take your umbrella.</b> · <b>He took the book off the shelf.</b>"],
+        ["Dùng thuốc","<b>Take two pills a day.</b>"],
+        ["Chịu đựng / tiếp nhận","<b>I can’t take it anymore.</b> · <b>She took the news well.</b>"],
+        ["Học / thi","<b>Take a course</b> · <b>take an exam.</b>"]
+      ],
+      tb:[["It takes + thời gian + to V","Tốn bao lâu để làm","It <b>takes</b> 30 minutes to cook."],
+          ["take + phương tiện","Đi bằng gì","We <b>took</b> a taxi."],
+          ["take + danh từ hành động","Đứng thay chính động từ ấy","<b>Take</b> a look."],
+          ["take + O + to + nơi chốn","Mang, đưa tới đâu","<b>Take</b> me to the airport."]],
+      st:[["It takes + ai + thời gian + to V","Ai đó mất bao lâu để làm xong.","<em>It took me three days to finish.</em>"],
+          ["take + O + for","Nhầm ai là người khác.","<em>I took him for his brother.</em>"]],
+      ph:[["Take off","Cất cánh; hoặc cởi ra.","The plane takes off at eight."],["Take after","Giống ai đó trong nhà.","She takes after her mother."],
+          ["Take up","Bắt đầu một sở thích mới; hoặc chiếm chỗ.","He took up painting after he retired."],["Take over","Tiếp quản.","A new manager took over last month."],
+          ["Take back","Rút lại lời đã nói.","I take back what I said."],["Take out","Lấy ra; hoặc dẫn ai đi chơi.","He took out his wallet and paid."],
+          ["Take on","Nhận thêm việc, tuyển thêm người.","The firm is taking on ten new staff."],["Take in","Hiểu thấu; hoặc cho ở nhờ.","It took a while to take in the news."],
+          ["Take down","Ghi lại; hoặc tháo xuống.","The nurse took down my details."]],
+      id:[["take it easy","Thong thả thôi."],["take your time","Cứ từ từ, không vội."],
+          ["take something for granted","Coi là chuyện đương nhiên."],["take part in","Tham gia vào."],
+          ["take care of","Lo liệu, chăm sóc."],["take the blame","Đứng ra nhận lỗi."]]
+    },
+    {
+      v:"be", gloss:"Thì, là, ở",
+      intro:"<b>Be</b> gần như không mang nghĩa riêng — nó chỉ bắc một nhịp giữa chủ ngữ và thứ nói về chủ ngữ. Đổi lại, nó là động từ bắt buộc phải có trong vô số câu, và còn gánh cả thì tiếp diễn lẫn thể bị động với tư cách trợ động từ.",
+      use:[
+        ["Là ai / là gì","<b>She is a teacher.</b> · <b>They are students.</b> — nối chủ ngữ với một danh từ."],
+        ["Thế nào","<b>The soup is cold.</b> · <b>I am tired.</b> — nối chủ ngữ với một tính từ."],
+        ["Ở đâu / lúc nào","<b>The keys are on the table.</b> · <b>The meeting is at five.</b>"],
+        ["Tuổi, giá, kích thước","<b>He is twelve.</b> · <b>It is five dollars.</b> · <b>The room is four metres wide.</b>"],
+        ["Trợ động từ — thì tiếp diễn","<b>She is singing.</b> · <b>They were waiting outside.</b>"],
+        ["Trợ động từ — thể bị động","<b>The letter was written by John.</b>"]
+      ],
+      tb:[["S + be + danh từ","Là ai, thuộc loại nào","She <b>is</b> a teacher."],
+          ["S + be + tính từ","Đang ở trạng thái nào","You <b>are</b> right."],
+          ["S + be + giới ngữ","Ở đâu, lúc nào","The cat <b>is</b> under the chair."],
+          ["S + be + V-ing","Thì tiếp diễn","She <b>is</b> singing."],
+          ["S + be + V3/ed","Thể bị động","The letter <b>was</b> written."]],
+      st:[["There is / There are","Nói có cái gì đó tồn tại; <em>there</em> chỉ giữ chỗ chủ ngữ chứ không trỏ vào đâu.","<em>There is a problem with the car.</em>"],
+          ["be going to","Sắp, định — dự tính sẵn hoặc đã thấy dấu hiệu.","<em>It’s going to rain.</em>"],
+          ["be about to","Sắp sửa, ngay bây giờ.","<em>We’re about to leave.</em>"],
+          ["be supposed to","Đáng lẽ phải, theo quy định hoặc theo hẹn.","<em>You’re supposed to be here at nine.</em>"],
+          ["be used to + V-ing","Đã quen với. Khác hẳn <em>used to + V</em> là thói quen đã bỏ.","<em>I’m used to getting up early.</em>"]],
+      ph:[["Be over","Xong, kết thúc.","The meeting is over, you can go."],["Be off","Đi đây — hoặc đồ ăn đã hỏng.","I'm off now, see you tomorrow."],
+          ["Be up","Đã dậy; hoặc có chuyện gì đang xảy ra.","She's up already, I can hear her."],["Be in / out","Có mặt / vắng mặt.","Sorry, the manager is out until noon."],
+          ["Be back","Quay lại.","I'll be back in ten minutes."],["Be on","Đang chiếu, đang diễn ra.","What's on television tonight?"]],
+      id:[["be up to someone","Tùy người đó quyết định."],["be up to something","Đang mưu tính chuyện gì."],
+          ["be into something","Mê, hứng thú với cái gì."],["be better off","Khá hơn nếu làm cách kia."],
+          ["be about to","Sắp sửa làm gì."]]
+    },
+    {
+      v:"give", gloss:"Cho, trao, gây ra",
+      intro:"<b>Give</b> mở hai chỗ trống cùng lúc — cho <em>ai</em> cái <em>gì</em> — nên nó là động từ mẫu mực của khung hai tân ngữ. Ngoài nghĩa trao tay, nó còn là động từ rỗng nghĩa hay dùng nhất: <em>give a call</em> đứng thay cho <em>call</em>, <em>give a look</em> thay cho <em>look</em>.",
+      use:[
+        ["Trao ai cái gì","<b>Give me a book.</b> · <b>Give him a chance.</b> · <b>She gave her the keys.</b>"],
+        ["Rỗng nghĩa — thay cho cả một động từ","<b>Give it a try.</b> · <b>Give me a call.</b> · <b>Give it a look.</b> · <b>Give me a hand.</b>"],
+        ["Gây ra","<b>The noise gave me a headache.</b> · <b>It gave us a fright.</b>"],
+        ["Tổ chức, trình bày","<b>They gave a party.</b> · <b>He gave a speech at the conference.</b>"],
+        ["Nhường, dành cho","<b>Give me a minute.</b> · <b>Give way to traffic from the right.</b>"]
+      ],
+      tb:[["S + give + IO + DO","Cho ai cái gì — người nhận đứng trước","She <b>gave</b> me a book."],
+          ["S + give + DO + to ai","Cùng nghĩa, đảo lại khi muốn nhấn người nhận","She <b>gave</b> a book to me."],
+          ["give + danh từ hành động","Đứng thay chính động từ ấy, nghe nhẹ hơn","<b>Give</b> it a try."],
+          ["give + ai + cảm giác","Gây ra cho ai điều gì","It <b>gave</b> me a headache."]],
+      st:[["give someone something","Hai tân ngữ liền nhau, không cần giới từ.","<em>She gave me a book.</em>"],
+          ["give something to someone","Dùng khi người nhận là phần tin mới, hoặc khi vật quá dài.","<em>She gave the keys to the man at the desk.</em>"],
+          ["give up + V-ing","Bỏ, cai; sau nó là V-ing.","<em>He gave up smoking last year.</em>"]],
+      ph:[["Give up","Bỏ cuộc — hoặc cai (give up smoking).","He gave up smoking last year."],["Give in","Chịu thua sau khi đã cố chống.","After an hour of arguing, she gave in."],
+          ["Give away","Cho không, tặng đi — hoặc để lộ bí mật.","They gave away free samples at the door."],["Give out","Phát cho nhiều người — hoặc kiệt sức, hết sạch.","The teacher gave out the exam papers."],
+          ["Give off","Tỏa ra mùi, khói, nhiệt.","The engine was giving off a strange smell."],["Give back","Trả lại.","Please give me back my pen."]],
+      id:[["give someone a hand","Giúp ai một tay."],["give someone a hard time","Làm khó ai."],
+          ["give or take","Xê xích chừng — thirty minutes, give or take."],
+          ["give it a rest","Thôi đi, đừng nhắc nữa."],
+          ["give someone the benefit of the doubt","Tạm tin là họ không cố ý."]]
+    },
+    {
+      v:"come", gloss:"Đến, tới, trở thành",
+      intro:"Cặp đối của <b>Go</b>, nhưng khác nhau không phải ở hướng đi mà ở <b>chỗ người nói đang đứng</b>: <em>come</em> là tiến về phía người nói hoặc người nghe. Cùng một chuyến đi, chủ nhà nói <em>come</em> còn khách nói <em>go</em>. Ngoài nghĩa di chuyển, nó còn là động từ nối và là một ổ phrasal verb lớn.",
+      use:[
+        ["Di chuyển về phía người nói","<b>Come here.</b> · <b>She came to my party.</b> Người nghe ở đâu thì <em>come</em> hướng về đó."],
+        ["Đổi sang trạng thái — thường là tốt","<code>Come + tính từ</code> — <b>Her dream came true.</b> · <b>Everything came right in the end.</b> Ngược với <em>go</em> vốn hay dẫn sang trạng thái xấu."],
+        ["Quê quán, xuất xứ","<code>come from</code> — <b>She comes from Vietnam.</b> · <b>This word comes from Latin.</b>"],
+        ["Sắp xảy ra","<b>A big storm is coming.</b> · <b>Winter is coming.</b>"],
+        ["Có bán, có sẵn ở dạng nào","<b>It comes in three sizes.</b> · <b>Does it come with a charger?</b>"],
+        ["Đứng thứ mấy","<b>He came first in the race.</b> · <b>Safety comes first.</b>"],
+        ["Rủ cùng làm","<code>come and + V</code>, lối thân mật bỏ luôn <em>and</em> — <b>Come and see this.</b> · <b>Come see this.</b>"]
+      ],
+      tb:[["come + to + nơi chốn","Đến đâu — về phía người nói","They <b>came</b> to my party."],
+          ["come + tính từ","Đổi sang trạng thái ấy","Her dream <b>came</b> true."],
+          ["come from + nơi chốn","Quê ở đâu, xuất xứ từ đâu","She <b>comes from</b> Vietnam."],
+          ["come (không bổ ngữ)","Đang tới gần","A storm is <b>coming</b>."],
+          ["come + thứ tự","Xếp thứ mấy","Safety <b>comes</b> first."]],
+      st:[["come and + V (hoặc bỏ <em>and</em>)","Rủ ai cùng làm gì.","<em>Come and have dinner with us.</em>"],
+          ["come to + V","Dần dần đi đến chỗ nhận ra điều gì.","<em>I came to realise he was right.</em>"],
+          ["How come + mệnh đề","Sao lại thế — hỏi lý do, và <b>không đảo trật tự</b> như câu hỏi thường.","<em>How come you are here?</em> — không phải <em>How come are you here?</em>"]],
+      ph:[["Come in","Vào đi.","Come in and sit down."],["Come back","Quay lại.","When will you come back?"],
+          ["Come across","Tình cờ bắt gặp; hoặc gây ấn tượng thế nào.","I came across an old photo yesterday."],
+          ["Come up with","Nghĩ ra được (ý tưởng, giải pháp).","She came up with a clever solution."],
+          ["Come along","Đi cùng; hoặc tiến triển.","Come along, we're going to be late."],["Come out","Lộ ra, được phát hành.","The truth came out a week later."],
+          ["Come over","Ghé qua nhà.","Come over for dinner on Sunday."],["Come down to","Rốt cuộc chỉ là chuyện gì.","It all comes down to money."],
+          ["Come up","Nảy ra, xuất hiện (vấn đề, chủ đề).","A problem came up at work."]],
+      id:[["come true","Thành hiện thực."],["how come","Sao lại thế?"],
+          ["come what may","Dù có chuyện gì đi nữa."],
+          ["first come, first served","Ai tới trước được trước."],
+          ["come to think of it","Nghĩ lại thì…"],["come in handy","Có lúc dùng được đấy."]]
+    },
+    {
+      v:"become", gloss:"Trở thành, trở nên",
+      intro:"Động từ nối thuần nhất cho sự thay đổi. Nét riêng: nó nhận được <b>cả danh từ lẫn tính từ</b> — <em>become a doctor</em> và <em>become cold</em> đều đúng, trong khi <em>get</em>, <em>go</em>, <em>turn</em> chỉ đi với tính từ. Đổi lại, nó trang trọng hơn cả nhóm.",
+      use:[
+        ["Trở thành ai, cái gì","<code>become + danh từ</code> — <b>She became a doctor.</b> · <b>They soon became good friends.</b>"],
+        ["Trở nên thế nào","<code>become + tính từ</code> — <b>It became very cold.</b> · <b>The situation became serious.</b>"],
+        ["Đâm ra thích, đâm ra quen","<b>He became interested in music.</b> · <b>She became used to the noise.</b>"],
+        ["Rồi ra sao — become of","<b>What became of him?</b> · <b>Whatever became of that plan?</b>"],
+        ["Trang trọng hơn <em>get</em>","Văn viết chuộng <em>become</em>: <b>The problem became worse</b> nghe chững hơn <em>got worse</em>."]
+      ],
+      tb:[["become + danh từ","Trở thành ai, cái gì","She <b>became</b> a doctor."],
+          ["become + tính từ","Trở nên thế nào","It <b>became</b> cold."],
+          ["become + V3/ed","Đâm ra ở trạng thái nào","He <b>became</b> interested."],
+          ["become of + ai","Rồi người đó ra sao","What <b>became of</b> him?"]],
+      st:[["become + danh từ, KHÁC get","<em>get</em> không nhận danh từ ở nghĩa này: nói <em>become a doctor</em>, không nói <em>*get a doctor</em>.","<em>She became a teacher.</em>"],
+          ["It became clear that …","Dẫn ra một mệnh đề, mượn <em>It</em> giữ chỗ chủ ngữ.","<em>It became clear that he was lying.</em>"]],
+      ph:[["Become of","Rồi ra sao, số phận thế nào.","Whatever became of that old car?"]],
+      id:[["become second nature","Thành phản xạ, quen tay."],
+          ["become a thing","Thành trào lưu, thành chuyện phổ biến."]]
+    },
+    {
+      v:"seem", gloss:"Có vẻ, dường như",
+      intro:"Động từ nối của sự <b>phỏng đoán</b>: nói điều mình suy ra chứ không khẳng định. So với <b>Look</b> — <em>look</em> dựa vào mắt nhìn, còn <em>seem</em> dựa vào suy đoán chung, nên <em>seem</em> dùng được cả khi chẳng nhìn thấy gì.",
+      use:[
+        ["Có vẻ thế nào","<code>seem + tính từ</code> — <b>He seems tired.</b> · <b>She seems upset.</b>"],
+        ["Có vẻ là — thêm <em>to be</em>","<b>She seems to be happy.</b> Nghĩa gần như không đổi, chỉ chững hơn."],
+        ["Có vẻ như là — cả mệnh đề","<code>It seems that …</code> — <b>It seems that they have left.</b>"],
+        ["Có vẻ giống","<code>seem like + danh từ</code> — <b>It seems like a good idea.</b>"],
+        ["Hình như có","<b>There seems to be a problem.</b> Cách nói nhẹ đi của <em>There is a problem</em>."]
+      ],
+      tb:[["seem + tính từ","Có vẻ thế nào","He <b>seems</b> tired."],
+          ["seem + to be + bổ ngữ","Cùng nghĩa, trang trọng hơn","She <b>seems to be</b> happy."],
+          ["It seems + mệnh đề","Có vẻ như là","<b>It seems</b> that they left."],
+          ["seem like + danh từ","Có vẻ giống cái gì","It <b>seems like</b> a good idea."]],
+      st:[["It seems that …","Bổ ngữ là mệnh đề thì bắt buộc mượn <em>It</em> giữ chỗ chủ ngữ.","<em>It seems that nobody knew.</em>"],
+          ["can’t seem to + V","Không tài nào làm được — phủ định nằm ở <em>seem</em> chứ không ở động từ sau.","<em>I can’t seem to find it.</em>"],
+          ["seem + tính từ, KHÔNG dùng trạng từ","Là động từ nối nên đi với tính từ.","<em>He seems strange.</em> — không phải <em>seems strangely</em>."]],
+      ph:[["Seem to be","Có vẻ là.","There seems to be a mistake here."]],
+      id:[["so it seems","Xem chừng là vậy."],
+          ["it would seem","Có vẻ như — lối nói dè dặt hơn nữa."]]
+    },
+    {
+      v:"feel", gloss:"Cảm thấy, sờ, có cảm giác",
+      intro:"Vừa là <b>động từ nối</b> (<em>I feel tired</em> — nói về chủ ngữ), vừa là <b>động từ thường có tân ngữ</b> (<em>feel the fabric</em> — chạm vào vật), lại còn là <b>động từ tri giác</b> lấy động từ nguyên thể không <em>to</em>. Ba khung khác hẳn nhau trong cùng một từ.",
+      use:[
+        ["Cảm thấy thế nào","<code>feel + tính từ</code> — <b>I feel tired.</b> · <b>She feels much better today.</b>"],
+        ["Sờ, chạm vào","<code>feel + tân ngữ</code> — <b>She felt the soft fabric.</b> · <b>Feel my forehead.</b>"],
+        ["Vật sờ vào thấy thế nào","Chủ ngữ là đồ vật: <b>This shirt feels soft.</b> · <b>The water feels cold.</b>"],
+        ["Muốn làm gì","<code>feel like + V-ing</code> — <b>I feel like going home.</b> Sau <em>like</em> là V-ing, không phải nguyên thể."],
+        ["Nhận ra có chuyện gì xảy ra","<code>feel + ai + V trần</code> — <b>He felt someone touch his arm.</b>"]
+      ],
+      tb:[["feel + tính từ","Cảm thấy thế nào (động từ nối)","I <b>feel</b> tired."],
+          ["feel + tân ngữ","Sờ, chạm vào","She <b>felt</b> the fabric."],
+          ["feel like + V-ing","Muốn làm gì","I <b>feel like</b> going home."],
+          ["feel + O + V trần","Nhận ra ai đang làm gì","He <b>felt</b> someone touch him."]],
+      st:[["feel bad, KHÔNG feel badly","Động từ nối đi với tính từ. <em>feel badly</em> nghĩa đen là “sờ soạng vụng về”.","<em>I feel bad about it.</em>"],
+          ["feel like + V-ing","<em>like</em> là giới từ, nên sau nó là V-ing — cùng bẫy với <em>look forward to</em>.","<em>Do you feel like eating out?</em>"],
+          ["Động từ tri giác + V trần","<em>feel</em>, <em>see</em>, <em>hear</em>, <em>watch</em> đều lấy nguyên thể không <em>to</em>.","<em>I felt the ground shake.</em>"]],
+      ph:[["Feel up to","Thấy đủ sức làm gì.","I don't feel up to going out tonight."],["Feel for","Thương cảm cho ai.","I really feel for her after what happened."],
+          ["Feel out","Dò ý ai đó.","Try to feel out what the boss thinks."]],
+      id:[["feel free","Cứ tự nhiên."],["feel at home","Thấy thoải mái như ở nhà."],
+          ["feel under the weather","Thấy trong người không khỏe."],
+          ["get a feel for","Bắt đầu quen với cái gì."]]
+    },
+    {
+      v:"turn", gloss:"Quay, đổi thành, vặn",
+      intro:"Hai vai cùng lúc: <b>động từ nối</b> cho sự đổi màu, đổi trạng thái, đổi tuổi (<em>turn brown</em>, <em>turn thirty</em>), và <b>ổ phrasal verb</b> lớn nhất nhì tiếng Anh (<em>turn on / off / up / down / into / out</em>). Riêng nghĩa tuổi tác thì chỉ <em>turn</em> làm được.",
+      use:[
+        ["Đổi màu, đổi trạng thái","<code>turn + tính từ</code> — <b>The leaves turned brown.</b> · <b>His face turned red.</b>"],
+        ["Tròn bao nhiêu tuổi","<b>She turned thirty last month.</b> Không nói <em>*became thirty</em>."],
+        ["Biến thành thứ khác","<code>turn into + danh từ</code> — <b>The rain turned into snow.</b>"],
+        ["Bật, tắt, vặn to nhỏ","<b>Please turn off the light.</b> · <b>Turn the music down.</b>"],
+        ["Hóa ra là","<code>turn out</code> — <b>It turned out to be a mistake.</b> · <b>How did it turn out?</b>"]
+      ],
+      tb:[["turn + tính từ","Đổi sang trạng thái, màu sắc","The leaves <b>turned</b> brown."],
+          ["turn + số tuổi","Tròn bao nhiêu tuổi","She <b>turned</b> thirty."],
+          ["turn into + danh từ","Biến thành thứ khác","The rain <b>turned into</b> snow."],
+          ["turn + tiểu từ + O","Bật, tắt, vặn","<b>Turn off</b> the light."],
+          ["turn out + to be","Hóa ra là","It <b>turned out</b> to be true."]],
+      st:[["turn + tiểu từ, tách được","<em>turn off the light</em> và <em>turn the light off</em> đều đúng — dấu hiệu đó là tiểu từ chứ không phải giới từ.","<em>Turn the light off.</em>"],
+          ["turn out (+ that)","Hóa ra — dẫn được cả một mệnh đề.","<em>It turned out that he was right.</em>"]],
+      ph:[["Turn on / off","Bật / tắt.","Please turn off the light when you leave."],["Turn up / down","Vặn to / nhỏ; hoặc xuất hiện / từ chối.","Could you turn the music down a bit?"],
+          ["Turn into","Biến thành.","The rain turned into snow overnight."],["Turn out","Hóa ra là; hoặc kéo nhau đến.","It turned out to be a lovely day."],
+          ["Turn back","Quay đầu lại.","The storm forced us to turn back."],["Turn over","Lật lại; hoặc giao nộp.","Turn the paper over and read the back."],
+          ["Turn down","Từ chối lời mời, lời đề nghị.","She turned down the job offer."]],
+      id:[["turn a blind eye","Làm ngơ."],["turn the tables","Lật ngược thế cờ."],
+          ["turn over a new leaf","Làm lại từ đầu, sửa mình."],
+          ["it’s your turn","Đến lượt bạn."],["turn heads","Khiến người ta phải ngoái nhìn."]]
+    },
+    {
+      v:"sound", gloss:"Nghe có vẻ, kêu",
+      intro:"Động từ nối của <b>tai</b>, cùng bộ năm giác quan với <em>look</em>, <em>smell</em>, <em>taste</em>, <em>feel</em>. Điểm dễ nhầm: chủ ngữ là <b>thứ được nghe</b>, không phải người nghe — nói <em>That sounds great</em>, không nói <em>*I sound great about that</em>.",
+      use:[
+        ["Nghe thế nào","<code>sound + tính từ</code> — <b>That sounds great.</b> · <b>You sound tired.</b>"],
+        ["Nghe như là","<code>sound like + danh từ</code> — <b>It sounds like a good plan.</b>"],
+        ["Nghe như thể","<code>It sounds as if …</code> — <b>It sounds as if she is angry.</b>"],
+        ["Kêu, vang lên","Nghĩa thường, không bổ ngữ: <b>The alarm sounded at six.</b>"],
+        ["Nghe giọng ai đó","<b>You sound just like your mother.</b> · <b>He sounded upset on the phone.</b>"]
+      ],
+      tb:[["sound + tính từ","Nghe thế nào","That <b>sounds</b> great."],
+          ["sound like + danh từ","Nghe như cái gì","It <b>sounds like</b> rain."],
+          ["It sounds as if + mệnh đề","Nghe như thể","<b>It sounds as if</b> she left."],
+          ["sound (không bổ ngữ)","Kêu, vang lên","The alarm <b>sounded</b>."]],
+      st:[["sound + tính từ, KHÔNG trạng từ","Là động từ nối nên đi với tính từ.","<em>It sounds strange.</em> — không phải <em>sounds strangely</em>."],
+          ["Chủ ngữ là thứ được nghe","Khác tiếng Việt: người nói không đứng làm chủ ngữ.","<em>Your idea sounds good.</em> — không phải <em>*I sound good about your idea.</em>"]],
+      ph:[["Sound out","Dò ý ai đó.","I'll sound him out about the idea."],["Sound off","Càu nhàu, lớn tiếng bày tỏ.","He's always sounding off about politics."]],
+      id:[["sounds good","Nghe được đấy — câu đồng ý thường ngày."],
+          ["sound like a plan","Nghe hợp lý, cứ vậy đi."]]
+    },
+    {
+      v:"smell", gloss:"Có mùi, ngửi",
+      intro:"Động từ nối của <b>mũi</b>, và như cả họ giác quan nó có <b>hai vai ngược nhau</b>: <em>The soup smells good</em> (chủ ngữ là thứ tỏa mùi) và <em>She smelled the flowers</em> (chủ ngữ là người ngửi). Riêng <em>smell</em> và <em>taste</em> còn có thêm <em>of</em> bên cạnh <em>like</em>.",
+      use:[
+        ["Có mùi thế nào","<code>smell + tính từ</code> — <b>The soup smells delicious.</b> · <b>Something smells bad.</b>"],
+        ["Ngửi cái gì","<code>smell + tân ngữ</code> — <b>She smelled the flowers.</b>"],
+        ["Có mùi na ná","<code>smell like</code> — <b>It smells like burning.</b>"],
+        ["Sặc mùi đúng thứ đó","<code>smell of</code> — <b>This room smells of smoke.</b>"],
+        ["Ngửi thấy điều bất thường","<b>I smell trouble.</b> · <b>Something smells fishy here.</b>"]
+      ],
+      tb:[["smell + tính từ","Có mùi thế nào","The soup <b>smells</b> good."],
+          ["smell + tân ngữ","Ngửi cái gì","She <b>smelled</b> the flowers."],
+          ["smell like + danh từ","Mùi na ná thứ gì","It <b>smells like</b> burning."],
+          ["smell of + danh từ","Mùi đúng là thứ đó","The room <b>smells of</b> smoke."]],
+      st:[["smell of KHÁC smell like","<em>of</em> = đúng mùi thứ đó; <em>like</em> = chỉ na ná.","<em>It smells of coffee</em> vs <em>It smells like coffee.</em>"],
+          ["smell + tính từ, KHÔNG trạng từ","<em>smells bad</em>, không phải <em>smells badly</em> — <em>smell badly</em> nghĩa là mũi kém.","<em>Something smells bad.</em>"]],
+      ph:[["Smell out","Đánh hơi ra, lần ra.","The dog smelled out the missing bag."]],
+      id:[["smell a rat","Đánh hơi thấy có gì mờ ám."],
+          ["smell fishy","Nghe đáng ngờ."],
+          ["come up smelling of roses","Thoát hiểm mà vẫn sạch tiếng."]]
+    },
+    {
+      v:"taste", gloss:"Có vị, nếm",
+      intro:"Động từ nối của <b>lưỡi</b>, khép trọn bộ năm giác quan. Cả năm dùng chung một khuôn: tính từ đứng trần, danh từ phải qua <em>like</em>. Giống <em>smell</em>, nó có thêm <em>of</em> để nói vị <b>đúng là</b> thứ đó chứ không phải na ná.",
+      use:[
+        ["Có vị thế nào","<code>taste + tính từ</code> — <b>This soup tastes salty.</b> · <b>The medicine tasted bitter.</b>"],
+        ["Nếm cái gì","<code>taste + tân ngữ</code> — <b>She tasted the sauce.</b> · <b>Can you taste the difference?</b>"],
+        ["Có vị na ná","<code>taste like</code> — <b>It tastes like chicken.</b>"],
+        ["Có vị đúng thứ đó","<code>taste of</code> — <b>The wine tastes of oak.</b>"],
+        ["Nếm trải (nghĩa bóng)","<b>He tasted freedom for the first time.</b>"]
+      ],
+      tb:[["taste + tính từ","Có vị thế nào","This soup <b>tastes</b> salty."],
+          ["taste + tân ngữ","Nếm cái gì","She <b>tasted</b> the sauce."],
+          ["taste like + danh từ","Vị na ná thứ gì","It <b>tastes like</b> chicken."],
+          ["taste of + danh từ","Vị đúng là thứ đó","The wine <b>tastes of</b> oak."]],
+      st:[["taste of KHÁC taste like","Cùng cặp phân biệt như <em>smell</em>.","<em>It tastes of honey</em> vs <em>It tastes like honey.</em>"],
+          ["taste + tính từ, KHÔNG trạng từ","Động từ nối thì đi với tính từ.","<em>It tastes good.</em> — không phải <em>tastes well</em>."]],
+      ph:[["Taste of","Có vị của.","The soup tastes of garlic."]],
+      id:[["an acquired taste","Thứ phải ăn quen mới thấy ngon."],
+          ["leave a bad taste in the mouth","Để lại cảm giác khó chịu."],
+          ["there’s no accounting for taste","Mỗi người một gu, không cãi được."]]
+    }
+  ];
+
+  return OMNI;
+})();

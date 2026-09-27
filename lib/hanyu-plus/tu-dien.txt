@@ -1,0 +1,306 @@
+# Từ dùng trong ngu-phap.md và dong-tu.md mà kho HSK1 có thể chưa có.
+# Mỗi dòng: chữ|pinyin|từ loại|nghĩa. Từ đã có trong kho thì chỉ bổ sung từ
+# loại nếu kho chưa ghi; không ghi đè gì.
+哥哥|gēge|NOUN|anh trai
+妹妹|mèimei|NOUN|em gái
+弟弟|dìdi|NOUN|em trai
+便宜|piányi|ADJ|rẻ
+火车|huǒchē|NOUN|tàu hỏa
+飞机|fēijī|NOUN|máy bay
+电影|diànyǐng|NOUN|phim
+衬衫|chènshān|NOUN|áo sơ mi
+白|bái|ADJ|trắng
+红|hóng|ADJ|đỏ
+墙|qiáng|NOUN|tường
+挂|guà|VERB|treo
+幅|fú|CLF|bức, tấm (tranh, bản đồ)
+地图|dìtú|NOUN|bản đồ
+故事|gùshi|NOUN|câu chuyện
+跑|pǎo|VERB|chạy
+唱|chàng|VERB|hát
+好听|hǎotīng|ADJ|hay (nghe)
+起|qǐ|VERB|dậy, đứng lên
+快要|kuàiyào|ADV|sắp
+就要|jiùyào|ADV|sắp
+下个月|xiàgeyuè|TIME|tháng sau
+近|jìn|ADJ|gần
+远|yuǎn|ADJ|xa
+上海|Shànghǎi|PROPN|Thượng Hải
+高铁|gāotiě|NOUN|tàu cao tốc
+开门|kāimén|VERB|mở cửa
+音乐|yīnyuè|NOUN|âm nhạc
+一边|yìbiān|ADV|vừa (làm gì)
+聊天|liáotiān|VERB|nói chuyện phiếm
+作业|zuòyè|NOUN|bài tập
+开车|kāichē|VERB|lái xe
+打电话|dǎ diànhuà|VERB|gọi điện thoại
+做饭|zuòfàn|VERB|nấu cơm
+课文|kèwén|NOUN|bài khóa
+周末|zhōumò|TIME|cuối tuần
+周五|zhōuwǔ|TIME|thứ Sáu
+公园|gōngyuán|NOUN|công viên
+公共汽车|gōnggòngqìchē|NOUN|xe buýt
+地铁|dìtiě|NOUN|tàu điện ngầm
+超市|chāoshì|NOUN|siêu thị
+走路|zǒulù|VERB|đi bộ
+机场|jīchǎng|NOUN|sân bay
+市中心|shìzhōngxīn|NOUN|trung tâm thành phố
+自行车|zìxíngchē|NOUN|xe đạp
+蛋糕|dàngāo|NOUN|bánh ngọt
+批评|pīpíng|VERB|phê bình
+窗户|chuānghu|NOUN|cửa sổ
+风|fēng|NOUN|gió
+吹|chuī|VERB|thổi
+越来越|yuèláiyuè|ADV|càng ngày càng
+越|yuè|ADV|càng
+热闹|rènao|ADJ|náo nhiệt, vui
+除了|chúle|ADP|ngoài ra, trừ
+以外|yǐwài|NOUN|ngoài
+英语|Yīngyǔ|NOUN|tiếng Anh
+小王|Xiǎo Wáng|PROPN|Tiểu Vương
+小李|Xiǎo Lǐ|PROPN|Tiểu Lý
+香蕉|xiāngjiāo|NOUN|chuối
+终于|zhōngyú|ADV|cuối cùng
+完|wán|VERB|xong, hết
+楼|lóu|NOUN|tầng, tòa nhà
+包|bāo|NOUN|túi, cặp
+小狗|xiǎogǒu|NOUN|chó con
+站|zhàn|VERB|đứng
+箱子|xiāngzi|NOUN|thùng, vali
+重|zhòng|ADJ|nặng
+动|dòng|VERB|động, nhúc nhích
+酒|jiǔ|NOUN|rượu
+脸|liǎn|NOUN|mặt
+路灯|lùdēng|NOUN|đèn đường
+亮|liàng|ADJ|sáng
+然后|ránhòu|ADV|sau đó
+手|shǒu|NOUN|tay
+银行|yínháng|NOUN|ngân hàng
+填|tián|VERB|điền
+表|biǎo|NOUN|bảng, đơn
+交|jiāo|VERB|nộp, giao
+为了|wèile|ADP|để, vì
+口语|kǒuyǔ|NOUN|khẩu ngữ, nói
+健康|jiànkāng|NOUN|sức khỏe
+辞|cí|VERB|thôi (việc)
+饿|è|ADJ|đói
+刮风|guāfēng|VERB|có gió, gió thổi
+干净|gānjìng|ADJ|sạch
+连|lián|ADP|ngay cả
+句|jù|CLF|câu
+页|yè|CLF|trang
+小孩|xiǎohái|NOUN|trẻ con
+不但|búdàn|CCONJ|không những
+种|zhǒng|CLF|loại
+外语|wàiyǔ|NOUN|ngoại ngữ
+既然|jìrán|SCONJ|đã… thì
+舒服|shūfu|ADJ|dễ chịu, khỏe
+无论|wúlùn|SCONJ|bất kể
+锻炼|duànliàn|VERB|rèn luyện
+登记|dēngjì|VERB|đăng ký
+困难|kùnnan|NOUN|khó khăn
+只有|zhǐyǒu|ADV|chỉ có
+药|yào|NOUN|thuốc
+难道|nándào|ADV|chẳng lẽ
+题|tí|NOUN|đề, bài
+约会|yuēhuì|NOUN|cuộc hẹn
+家人|jiārén|NOUN|người nhà
+外国人|wàiguórén|NOUN|người nước ngoài
+成绩|chéngjì|NOUN|thành tích, điểm
+花|huā|VERB|tiêu (tiền)
+海边|hǎibiān|NOUN|bờ biển
+夏天|xiàtiān|TIME|mùa hè
+放假|fàngjià|VERB|nghỉ lễ
+裙子|qúnzi|NOUN|váy
+门口|ménkǒu|NOUN|cổng, cửa
+号码|hàomǎ|NOUN|số
+成为|chéngwéi|VERB|trở thành
+留学|liúxué|VERB|du học
+开心|kāixīn|ADJ|vui
+糖|táng|NOUN|đường
+词典|cídiǎn|NOUN|từ điển
+笔|bǐ|NOUN|bút
+出门|chūmén|VERB|ra ngoài
+钥匙|yàoshi|NOUN|chìa khóa
+灯|dēng|NOUN|đèn
+厨房|chúfáng|NOUN|nhà bếp
+行李|xíngli|NOUN|hành lý
+遍|biàn|CLF|lượt, lần
+照顾|zhàogù|VERB|chăm sóc
+看法|kànfǎ|NOUN|quan điểm
+旅行|lǚxíng|VERB|du lịch, đi chơi xa
+护照|hùzhào|NOUN|hộ chiếu
+路|lù|NOUN|đường
+办法|bànfǎ|NOUN|cách, biện pháp
+哪个|nǎge|PRON|cái nào
+开会|kāihuì|VERB|họp
+计划|jìhuà|NOUN|kế hoạch
+同学们|tóngxuémen|NOUN|các bạn học
+词|cí|NOUN|từ
+半天|bàntiān|NOUN|nửa ngày, mãi
+水平|shuǐpíng|NOUN|trình độ
+阅读|yuèdú|VERB|đọc hiểu
+能力|nénglì|NOUN|năng lực
+足球|zúqiú|NOUN|bóng đá
+比赛|bǐsài|NOUN|trận đấu, cuộc thi
+任务|rènwu|NOUN|nhiệm vụ
+必须|bìxū|AUX|phải
+由|yóu|ADP|do
+项目|xiàngmù|NOUN|dự án
+经理|jīnglǐ|NOUN|giám đốc
+生活|shēnghuó|NOUN|cuộc sống
+刚|gāng|ADV|vừa mới
+一直|yìzhí|ADV|luôn, suốt
+想法|xiǎngfǎ|NOUN|suy nghĩ
+出发|chūfā|VERB|xuất phát
+每|měi|PRON|mỗi
+上个月|shànggeyuè|TIME|tháng trước
+摩托车|mótuōchē|NOUN|xe máy
+爷爷|yéye|NOUN|ông nội
+烤鸭|kǎoyā|NOUN|vịt quay
+附近|fùjìn|NOUN|gần, lân cận
+房子|fángzi|NOUN|nhà
+辆|liàng|CLF|chiếc (xe)
+这些|zhèxiē|PRON|những… này
+排|pái|VERB|xếp
+邮件|yóujiàn|NOUN|thư, email
+信用卡|xìnyòngkǎ|NOUN|thẻ tín dụng
+好好|hǎohǎo|ADV|cho tử tế, kỹ
+成|chéng|VERB|thành
+越南语|Yuènányǔ|NOUN|tiếng Việt
+文件|wénjiàn|NOUN|tài liệu
+短信|duǎnxìn|NOUN|tin nhắn
+消息|xiāoxi|NOUN|tin tức, tin nhắn
+网上|wǎngshang|NOUN|trên mạng
+生词|shēngcí|NOUN|từ mới
+咖啡馆|kāfēiguǎn|NOUN|quán cà phê
+空|kòng|NOUN|thời gian rảnh
+晚会|wǎnhuì|NOUN|buổi tiệc tối
+生日|shēngrì|NOUN|sinh nhật
+别人|biérén|PRON|người khác
+感受|gǎnshòu|NOUN|cảm nhận
+马上|mǎshàng|ADV|ngay, lập tức
+环境|huánjìng|NOUN|môi trường
+酒店|jiǔdiàn|NOUN|khách sạn
+免费|miǎnfèi|ADJ|miễn phí
+早餐|zǎocān|NOUN|bữa sáng
+信息|xìnxī|NOUN|thông tin
+语言|yǔyán|NOUN|ngôn ngữ
+机会|jīhuì|NOUN|cơ hội
+安全|ānquán|ADJ|an toàn
+大学|dàxué|NOUN|đại học
+干杯|gānbēi|INTJ|cạn ly
+杯子|bēizi|NOUN|cái cốc, ly
+头|tóu|NOUN|đầu
+天空|tiānkōng|NOUN|bầu trời
+袋|dài|CLF|bao, túi
+米|mǐ|NOUN|gạo
+坏|huài|ADJ|hỏng, xấu
+警察|jǐngchá|NOUN|cảnh sát
+小猫|xiǎomāo|NOUN|mèo con
+钱包|qiánbāo|NOUN|ví tiền
+垃圾|lājī|NOUN|rác
+随便|suíbiàn|ADV|tùy tiện, bừa
+球|qiú|NOUN|quả bóng
+照片|zhàopiàn|NOUN|ảnh
+肩膀|jiānbǎng|NOUN|vai
+篮球|lánqiú|NOUN|bóng rổ
+从来|cónglái|ADV|từ trước tới nay
+办公室|bàngōngshì|NOUN|văn phòng
+瓶子|píngzi|NOUN|cái chai
+毛巾|máojīn|NOUN|khăn mặt
+干|gān|ADJ|khô
+头发|tóufa|NOUN|tóc
+剪刀|jiǎndāo|NOUN|cái kéo
+纸|zhǐ|NOUN|giấy
+牙|yá|NOUN|răng
+院子|yuànzi|NOUN|sân
+雪|xuě|NOUN|tuyết
+二维码|èrwéimǎ|NOUN|mã QR
+电脑|diànnǎo|NOUN|máy tính
+听到|tīngdào|VERB|nghe thấy
+脚|jiǎo|NOUN|chân, bàn chân
+草地|cǎodì|NOUN|bãi cỏ
+宝宝|bǎobao|NOUN|em bé
+树|shù|NOUN|cây
+小鸟|xiǎoniǎo|NOUN|chim nhỏ
+天上|tiānshang|NOUN|trên trời
+火|huǒ|NOUN|lửa
+首|shǒu|CLF|bài (hát, thơ)
+歌|gē|NOUN|bài hát
+快乐|kuàilè|ADJ|vui vẻ
+蜡烛|làzhú|NOUN|nến
+狗|gǒu|NOUN|chó
+蚊子|wénzi|NOUN|muỗi
+问好|wènhǎo|VERB|chào hỏi
+鞋|xié|NOUN|giày
+外套|wàitào|NOUN|áo khoác
+动物|dòngwù|NOUN|động vật
+女儿|nǚ'ér|NOUN|con gái
+山|shān|NOUN|núi
+帽子|màozi|NOUN|mũ
+座|zuò|CLF|tòa, cây (cầu, núi)
+桥|qiáo|NOUN|cầu
+快递|kuàidì|NOUN|chuyển phát nhanh
+顿|dùn|CLF|bữa
+一些|yìxiē|NUM|một ít
+钢琴|gāngqín|NOUN|đàn piano
+多久|duōjiǔ|PRON|bao lâu
+见到|jiàndào|VERB|gặp được
+找到|zhǎodào|VERB|tìm thấy
+感动|gǎndòng|ADJ|xúc động
+眼泪|yǎnlèi|NOUN|nước mắt
+汗|hàn|NOUN|mồ hôi
+观众|guānzhòng|NOUN|khán giả
+热烈|rèliè|ADJ|nhiệt liệt
+结束|jiéshù|VERB|kết thúc
+表演|biǎoyǎn|NOUN|buổi biểu diễn
+与其|yǔqí|CCONJ|thay vì
+不如|bùrú|CCONJ|chi bằng, không bằng
+走走|zǒuzou|VERB|đi dạo
+旧|jiù|ADJ|cũ
+宁可|nìngkě|ADV|thà
+快餐|kuàicān|NOUN|đồ ăn nhanh
+哪怕|nǎpà|SCONJ|dù cho
+大雨|dàyǔ|NOUN|mưa to
+按时|ànshí|ADV|đúng giờ
+经验|jīngyàn|NOUN|kinh nghiệm
+从而|cóng'ér|CCONJ|nhờ đó, từ đó
+以便|yǐbiàn|CCONJ|để tiện
+节省|jiéshěng|VERB|tiết kiệm
+地址|dìzhǐ|NOUN|địa chỉ
+到达|dàodá|VERB|đến nơi
+何况|hékuàng|CCONJ|huống chi
+大人|dàrén|NOUN|người lớn
+平时|píngshí|TIME|ngày thường
+而是|érshì|CCONJ|mà là
+交流|jiāoliú|VERB|giao lưu, giao tiếp
+靠|kào|VERB|dựa vào
+运气|yùnqi|NOUN|vận may
+之所以|zhīsuǒyǐ|SCONJ|sở dĩ
+文化|wénhuà|NOUN|văn hóa
+店|diàn|NOUN|cửa hàng
+堵车|dǔchē|VERB|tắc đường
+够|gòu|ADJ|đủ
+固然|gùrán|ADV|tuy, đành rằng
+但|dàn|CCONJ|nhưng
+道理|dàolǐ|NOUN|đạo lý, lý lẽ
+以|yǐ|ADP|lấy, bằng
+中心|zhōngxīn|NOUN|trung tâm
+部|bù|CLF|bộ (phim)
+真实|zhēnshí|ADJ|chân thực, có thật
+基础|jīchǔ|NOUN|nền tảng
+教书|jiāoshū|VERB|dạy học
+生|shēng|NOUN|sinh kế
+质量|zhìliàng|NOUN|chất lượng
+第一|dìyī|NUM|thứ nhất
+骄傲|jiāo'ào|ADJ|tự hào
+非|fēi|ADV|nhất định (phải)
+不可|bùkě|PART|không được
+功夫|gōngfu|NOUN|công sức
+好看|hǎokàn|ADJ|hay, đẹp
+好用|hǎoyòng|ADJ|dễ dùng
+这次|zhècì|TIME|lần này
+上次|shàngcì|TIME|lần trước
+从小|cóngxiǎo|ADV|từ nhỏ
+曾经|céngjīng|ADV|đã từng
