@@ -12,7 +12,9 @@ Bốn trang học tiếng Anh và tiếng Trung qua cấu trúc câu, xuất b�
 ## Cấu trúc
 
 ```
-src/            trang PHP của bốn site + index.html (trang mục lục)
+src/            bốn site + index.html (trang mục lục)
+  en-svo/, en-chunks/   HTML + JS thuần, không cần dựng
+  zh-svo/, zh-chunks/   trang PHP, chỉ chạy lúc dựng
 lib/            thư viện tiếng Trung
   hanyu.php         đọc ghi chú, tách từ, căn pinyin
   hanyu_syntax.php  phân tích cú pháp (chủ ngữ, vị ngữ, tân ngữ, bổ ngữ…)
@@ -22,7 +24,9 @@ build.php       dựng mọi trang thành HTML tĩnh trong dist/
 tools/render.php  chạy một trang PHP, in HTML ra
 ```
 
-PHP chỉ dùng lúc dựng. Dữ liệu được phân tích rồi nhúng thẳng vào trang, nên `dist/` chỉ còn HTML, CSS, JS.
+Hai site tiếng Anh là file tĩnh sẵn (en-chunks tự đọc `chunks.json` khi mở trang). Hai site tiếng Trung cần PHP
+lúc dựng để tách từ, căn pinyin và phân tích câu từ ghi chú; kết quả được nhúng thẳng vào trang. `dist/` chỉ còn
+HTML, CSS, JS.
 
 ## Dựng và xem thử
 

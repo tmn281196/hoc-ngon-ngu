@@ -1,4 +1,0 @@
-# Các file chỉ để trang khác require: mở thẳng thì chỉ ra một mẩu trang rỗng.
-<FilesMatch "^(data|board|chrome|chrome-foot)\.php$">
-    Require all denied
-</FilesMatch>

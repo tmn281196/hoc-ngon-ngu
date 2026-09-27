@@ -1,7 +1,23 @@
-<?php
-$PAGE  = 'omnibus';
-require __DIR__ . '/chrome.php';
-?>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Động từ đặc biệt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="wrap">
+  <nav class="pagenav" aria-label="Các trang">
+    <a href="index.html">Mục lục</a>
+    <a href="omnibus.html" aria-current="page">Động từ đặc biệt</a>
+    <a href="topics.html">Theo ngữ nghĩa</a>
+    <a href="reference.html">Bảng tra nhãn</a>
+  </nav>
   <header>
     <p class="eyebrow">Phân tích câu tiếng Anh · 01</p>
     <h1><i>Động từ đặc biệt</i> — 21 từ gánh hàng chục nghĩa</h1>
@@ -66,8 +82,18 @@ require __DIR__ . '/chrome.php';
     </div>
 
   </div>
-<?php
-$FOOT_EXTRA   = 'Toàn bộ câu trên trang này được chú giải <strong>bằng tay</strong>, nên đọc được là tin được.';
-$DATA_SCRIPTS = ['verbs-data.js', 'omni-data.js'];
-$PAGE_CFG     = '{start:3}';
-require __DIR__ . '/chrome-foot.php';
+  <footer>
+    Phân tích theo lối ngữ pháp trường học (subject – verb – object – complement – modifier), hợp cho người học.
+    Ranh giới bổ ngữ / bổ nghĩa đôi khi còn tranh cãi ngay trong giới ngôn ngữ học — phép thử thực dụng là bỏ thử
+    ra xem câu còn đúng không. Máy phân tích câu dùng hệ nhãn khác, chi tiết hơn: chuẩn Universal Dependencies với
+    <code>nsubj</code>, <code>obj</code>, <code>xcomp</code>, <code>obl</code>, <code>amod</code>.
+    <br><br>Toàn bộ câu trên trang này được chú giải <strong>bằng tay</strong>, nên đọc được là tin được.  </footer>
+</div>
+
+<script src="field.js"></script>
+<script src="verbs-data.js"></script>
+<script src="omni-data.js"></script>
+<script>window.SVO_PAGE = {start:3};</script>
+<script src="graph.js"></script>
+</body>
+</html>

@@ -8,9 +8,10 @@ declare(strict_types=1);
  *     php build.php            -> dist/
  *     php build.php out/dir    -> thư mục khác
  *
- * PHP chỉ dùng lúc dựng: dữ liệu (lib/hanyu-data, lib/hanyu-plus, chunks.json)
- * được đọc, phân tích rồi nhúng thẳng vào trang, nên bản trong dist/ là HTML +
- * CSS + JS thuần, mở trực tiếp hay đẩy lên GitHub Pages đều chạy.
+ * File không phải PHP (en-svo, en-chunks, index.html, CSS, JS) chép nguyên. Trang
+ * PHP (zh-svo, zh-chunks) chạy lúc dựng: dữ liệu trong lib/hanyu-data và
+ * lib/hanyu-plus được phân tích rồi nhúng thẳng vào trang, nên bản trong dist/
+ * là HTML + CSS + JS thuần.
  *
  * Mỗi trang chạy trong một tiến trình PHP riêng (tools/render.php): các trang
  * cùng một site nạp chung chrome.php, data.php, nên chạy chung một tiến trình
