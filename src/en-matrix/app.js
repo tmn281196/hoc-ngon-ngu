@@ -13,11 +13,11 @@
   "use strict";
 
   const BOOK_INFO = {
-    zero: { short: "Zero", desc: "Câu ba bốn chữ: tư duy theo trật tự tiếng Anh, từng từ rồi từng khối.", secs: 0 },
-    "30s": { short: "30 giây", desc: "Mẫu câu cơ bản, rồi ghép thành bài nói 30 giây.", secs: 30 },
-    "1m": { short: "1 phút", desc: "Cụm diễn đạt đời thường; nối lại thành bài nói 1 phút.", secs: 60 },
-    "2m": { short: "2 phút", desc: "Mỗi bài sáu mẩu chuyện ngắn; ráp thành bài nói 2 phút.", secs: 120 },
-    "3m": { short: "3 phút", desc: "Hai chủ đề một ngày; trả lời câu hỏi mở trong 3 phút.", secs: 180 },
+    zero: { short: "Zero", desc: "Câu ba bốn chữ: tư duy theo trật tự tiếng Anh, từng từ rồi từng khối." },
+    "30s": { short: "30 giây", desc: "Mẫu câu cơ bản, rồi ghép thành bài nói 30 giây." },
+    "1m": { short: "1 phút", desc: "Cụm diễn đạt đời thường; nối lại thành bài nói 1 phút." },
+    "2m": { short: "2 phút", desc: "Mỗi bài sáu mẩu chuyện ngắn; ráp thành bài nói 2 phút." },
+    "3m": { short: "3 phút", desc: "Hai chủ đề một ngày; trả lời câu hỏi mở trong 3 phút." },
   };
   const BLOCK = { key: "Tóm tắt trọng tâm", drill: "Luyện tập tập trung", apply: "Nói ứng dụng" };
   const KIND = { input: "INPUT", output: "OUTPUT", review: "Ôn tập", test: "Kiểm tra" };
@@ -111,9 +111,7 @@
     }
 
     // ------------------------------------------------------------ một bài
-    let timer = 0;
     function renderDay(d) {
-      clearInterval(timer);
       const b = d.book, info = BOOK_INFO[b.id] || {};
       document.body.className = "b-" + b.id + (state.mode === "drill" ? " drill" : "");
       let n = 0;
@@ -140,9 +138,7 @@
 
       if (d.script) {
         const vi = (d.items || []).map(it => it.v.vi || "").join(" ");
-        const secs = info.secs || 60;
-        h += `<section class="script"><h3>Cả bài — tự nói trong ${secs < 60 ? secs + " giây" : secs / 60 + " phút"}</h3>
-          <div class="bar2"><button type="button" class="btn" id="go"><span class="timer" id="clock">${fmt(secs)}</span> Bắt đầu</button></div>
+        h += `<section class="script"><h3>Cả bài</h3>
           <p class="vi-p">${esc(vi)}</p>
           <p class="en-p" lang="en" data-en="${esc(d.script.en)}">${esc(d.script.en)}</p></section>`;
       }
@@ -156,21 +152,7 @@
       const main = $("#main");
       main.innerHTML = h;
 
-      if (d.script) {
-        const secs = info.secs || 60;
-        $("#go").onclick = () => {
-          clearInterval(timer);
-          const end = Date.now() + secs * 1000, clock = $("#clock");
-          timer = setInterval(() => {
-            const left = Math.max(0, Math.round((end - Date.now()) / 1000));
-            if (!document.body.contains(clock)) { clearInterval(timer); return; }
-            clock.textContent = fmt(left);
-            if (!left) { clearInterval(timer); main.querySelector(".script").classList.add("open"); }
-          }, 250);
-        };
-      }
     }
-    const fmt = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
 
     // Bấm trong bài (khi đang Luyện): khối, thẻ, câu bị che → mở.
     $("#main").addEventListener("click", e => {

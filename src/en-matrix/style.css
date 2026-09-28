@@ -176,7 +176,6 @@ main:focus{outline:none}
 .script h3{margin:0 0 4px; font:500 10.5px "IBM Plex Mono", monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--k)}
 .script .en-p{margin:8px 0 0; font:400 18px/1.6 "Newsreader", Georgia, serif}
 .script .vi-p{margin:10px 0 0; color:#C4C7CC; font-size:14.5px}
-.timer{font:500 22px "IBM Plex Mono", monospace; color:var(--k); min-width:74px; display:inline-block}
 .drill .script:not(.open) .en-p{filter:blur(6px); user-select:none; cursor:pointer}
 
 /* Kết quả tìm */
