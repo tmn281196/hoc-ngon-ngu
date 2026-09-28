@@ -6,7 +6,7 @@
      day:  { id, no, kind: input|output|review|test, title, titleEn?, uses?, items?: [item], blocks?: [block],
              script?: { en } }
      block: { title, kind?: key|drill|apply, items: [item] }
-     item: { en, title?, tag?, chunks?, words?, notes?: [[term, nghĩa]], img? }
+     item: { en, title?, tag?, chunks?, words?, notes?: [[term, nghĩa]] }
    vi.json: { s: { en: { vi, c?: [nghĩa từng khối], cc?: { "khối|khối": [..] }, w?: [nghĩa từng từ] } } }
    Tiêu đề đã là tiếng Việt sẵn trong data.json (trống nếu chưa dịch). */
 (function () {
@@ -153,7 +153,6 @@
       h += `<div style="flex:1;min-width:0">`;
       if (it.title) h += `<h4>${esc(tr(it.title))}</h4>`;
       if (it.tag) h += `<span class="tag">${esc(it.tag)}</span> `;
-      if (it.img) h += `<div class="imgs">${it.img.map(s => `<img src="img/${esc(s.replace(/\.\w+$/, ""))}.webp" alt="" loading="lazy">`).join("")}</div>`;
       if (it.words) h += chunkRow(it.words, v.w, "words");
       // Cùng một câu có thể được ngắt khối khác nhau ở hai chỗ: cc giữ nghĩa theo từng cách ngắt.
       if (it.chunks && it.chunks.length > 1) h += chunkRow(it.chunks, (v.cc && v.cc[it.chunks.join("|")]) || v.c);
@@ -185,8 +184,7 @@
         if (bl.kind === "key") {
           h += `<div class="pics">${bl.items.map(it => {
             n++;
-            return `<button type="button" class="pic" id="it-${n}" data-en="${esc(it.en)}"><span class="ims">` +
-              (it.img || []).map(s => `<img src="img/${esc(s.replace(/\.\w+$/, ""))}.webp" alt="" loading="lazy">`).join("") + `</span>` +
+            return `<button type="button" class="pic" id="it-${n}" data-en="${esc(it.en)}">` +
               `<span class="e">${esc(it.en)}</span><span class="g">${esc(it.v.vi || "")}</span>` +
               `</button>`;
           }).join("")}</div>`;

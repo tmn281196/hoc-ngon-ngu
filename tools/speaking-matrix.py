@@ -1,6 +1,6 @@
 """Dựng src/en-matrix/data.json từ năm cuốn epub Speaking Matrix (Zero, 30s, 1m, 2m, 3m).
 
-    python tools/speaking-matrix.py <thư mục epub> [--images] [--ko]
+    python tools/speaking-matrix.py <thư mục epub> [--ko]
 
 Chỉ lấy phần luyện nói (câu tiếng Anh, cách ngắt khối); bỏ phần lý thuyết, lời dẫn, bài giải thích. Sách viết cho
 người Hàn nên chú thích gốc là tiếng Hàn; data.json không giữ chữ Hàn nào:
@@ -8,9 +8,8 @@ người Hàn nên chú thích gốc là tiếng Hàn; data.json không giữ ch
   - tên bài, tên mục, ghi chú từ vựng được thay bằng tiếng Việt lúc dựng, tra từ <thư mục epub>/vi-titles.json
     ({ "tiêu đề tiếng Hàn": "tiếng Việt", "term | nghĩa tiếng Hàn": "nghĩa tiếng Việt" }); chưa dịch thì để trống.
 --ko: ghi thêm src/en-matrix/ko.json (bản gốc còn chữ Hàn, để dịch phần mới; không đăng).
---images: chép ảnh minh họa của cuốn 30s (thu nhỏ, cần Pillow) vào src/en-matrix/img/.
 """
-import html, io, json, re, sys, zipfile
+import html, json, re, sys, zipfile
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -312,22 +311,18 @@ def parse_30s_input(els):
             continue
         if mode == 'key':
             if e.has('txtex', 'dl') and ko(t):
-                item = {'ko': clean(re.sub(r'^\d+\s*', '', t)).replace('*', '').replace('  ', ' '), 'img': []}
+                item = {'ko': clean(re.sub(r'^\d+\s*', '', t)).replace('*', '').replace('  ', ' ')}
                 cur['items'].append(item)
-            elif item is not None and e.imgs and not t:
-                item['img'] += [i for i in e.imgs if not i.startswith('icon')]
             elif item is not None and e.has('txt1', 'dl') and not ko(t):
                 item['en'] = (item.get('en', '') + ' ' + t).strip()
         elif mode == 'drill':
             if e.has('txtex', 'dm', 'gray') and re.match(r'^\d+$', t):
-                item = {'img': [], 'koChunks': [], 'chunks': []}
+                item = {'koChunks': [], 'chunks': []}
                 cur['items'].append(item)
             elif is_step(e):
                 step = step_no(e)
             elif item is None:
                 continue
-            elif step == 1 and e.imgs:
-                item['img'] += [i for i in e.imgs if not i.startswith('icon')]
             elif step == 2 and ko(t):
                 item['koChunks'].append(clean(re.sub(r'\((주체|행동|나머지|[^)]*)\)$', '', t)))
             elif step == 3 and not ko(t):
@@ -350,8 +345,6 @@ def parse_30s_input(els):
                 item['en'] = unstar(t)
     for b in blocks:
         for i in b['items']:
-            if not i.get('img'):
-                i.pop('img', None)
             if len(i.get('chunks', [])) != len(i.get('koChunks', i.get('chunks', []))):
                 i.pop('koChunks', None)
         b['items'] = [i for i in b['items'] if i.get('en') and i.get('ko')]
@@ -452,16 +445,6 @@ def build_book(zf, bid):
     return [p for p in parts if p['days']]
 
 
-def copy_images(zf, names):
-    from PIL import Image
-    d = OUT / 'img'
-    d.mkdir(exist_ok=True)
-    for n in sorted(names):
-        im = Image.open(io.BytesIO(zf.read('OEBPS/Images/' + n))).convert('RGB')
-        im.thumbnail((320, 320))
-        im.save(d / (Path(n).stem + '.webp'), 'WEBP', quality=70)
-
-
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
@@ -473,14 +456,6 @@ def main():
         zf = zipfile.ZipFile(f)
         parts = build_book(zf, bid)
         books.append({'id': bid, 'name': name, 'parts': parts})
-        if bid == '30s' and '--images' in sys.argv:
-            imgs = set()
-            for p in parts:
-                for d in p['days']:
-                    for b in d.get('blocks', []):
-                        for i in b['items']:
-                            imgs.update(i.get('img', []))
-            copy_images(zf, imgs)
         n = sum(len(d.get('items', [])) + sum(len(b['items']) for b in d.get('blocks', []))
                 for p in parts for d in p['days'])
         print(f'{bid}: {sum(len(p["days"]) for p in parts)} bài, {n} câu')

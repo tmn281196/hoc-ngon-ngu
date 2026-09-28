@@ -17,7 +17,7 @@ backend, không có bước dựng; đăng trên GitHub Pages.
 src/            cả site, đăng nguyên thư mục này
   index.html            trang mục lục
   en-svo/, en-chunks/   hai site tiếng Anh (en-chunks đọc chunks.json)
-  en-matrix/            luyện nói Speaking Matrix: data.json (dựng từ epub), vi.json (nghĩa tiếng Việt), img/
+  en-matrix/            luyện nói Speaking Matrix: data.json (dựng từ epub), vi.json (nghĩa tiếng Việt)
   zh-svo/, zh-chunks/   hai site tiếng Trung
   hanyu/                dùng chung cho hai site tiếng Trung
     data.json           câu đã tách từ, pinyin, từ điển (dựng từ note, xem dưới)
@@ -48,11 +48,10 @@ rồi vào http://localhost:8000.
 ## Sửa nội dung
 
 - Khối tiếng Anh: `src/en-chunks/chunks.json`.
-- Speaking Matrix: epub không nằm trong repo. Dựng lại `data.json` (thêm `--images` để chép ảnh cuốn 30 giây, cần
-  Pillow):
+- Speaking Matrix: epub không nằm trong repo. Dựng lại `data.json`:
 
   ```bash
-  python tools/speaking-matrix.py <thư mục epub> --images
+  python tools/speaking-matrix.py <thư mục epub>
   ```
 
   Sách viết cho người Hàn, nhưng trang và `data.json` không giữ chữ Hàn nào. Nghĩa câu, nghĩa từng khối nằm ở

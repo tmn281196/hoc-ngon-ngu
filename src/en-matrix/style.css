@@ -173,18 +173,13 @@ main:focus{outline:none}
 .drill .item .hint{display:inline}
 .hint{display:none; color:var(--dim); font:10px "IBM Plex Mono", monospace; letter-spacing:.06em}
 
-/* 30 giây: thẻ có ảnh */
-.pics{display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
-.pic{background:var(--panel); padding:10px; cursor:pointer; text-align:left; border:0; display:flex; flex-direction:column; gap:6px}
+/* 30 giây: thẻ cụm từ trọng tâm */
+.pics{display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+.pic{background:var(--panel); padding:12px 14px; cursor:pointer; text-align:left; border:0; display:flex; flex-direction:column; gap:4px}
 .pic:hover{background:var(--panel2)}
-.pic .ims{display:flex; gap:2px}
-.pic .ims img{flex:1 1 0; min-width:0}
-.pic img, .item .imgs img{display:block; width:100%; aspect-ratio:1; object-fit:contain; background:#E9E6DF; filter:grayscale(.1)}
 .pic .e{color:var(--k); font-size:15px; font-weight:500}
 .pic .g{color:#C4C7CC; font-size:13px}
 .drill .pic:not(.open) .e{color:transparent; background:repeating-linear-gradient(90deg, #2A3038 0 6px, transparent 6px 9px) 0 80%/100% 3px no-repeat}
-.item .imgs{display:flex; gap:4px; margin:4px 0 8px}
-.item .imgs img{width:78px}
 
 /* Cả đoạn (OUTPUT) */
 .script{margin-top:26px; border:1px solid var(--k); background:var(--panel); padding:16px 18px}
