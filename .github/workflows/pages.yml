@@ -1,4 +1,4 @@
-# Dựng bản tĩnh bằng build.php rồi đăng lên GitHub Pages mỗi lần đẩy lên main.
+# Đăng thẳng src/ lên GitHub Pages mỗi lần đẩy lên main: site là file tĩnh, không có bước dựng.
 name: Pages
 
 on:
@@ -16,26 +16,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          extensions: mbstring
-          coverage: none
-      - run: php build.php dist
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: src
       - id: deployment
         uses: actions/deploy-pages@v4

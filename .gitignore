@@ -1,7 +1,8 @@
-# Bản dựng: GitHub Actions dựng lại mỗi lần đẩy lên, không giữ trong git.
+# Thư mục dựng của bản PHP cũ, nay không dùng nữa.
 /dist/
-
-# Đệm lib/hanyu.php và zh-svo/data.php ghi cạnh trang lúc dựng.
-/src/zh-*/.cache.json
-/src/zh-*/.parse.json
 *.tmp
+
+# Speaking Matrix: nội dung sách có bản quyền, chỉ dựng ở máy (tools/speaking-matrix.py).
+/src/en-matrix/data.json
+/src/en-matrix/img/
+/src/en-matrix/ko.json

@@ -1,5 +1,5 @@
 /* Học tiếng Trung theo từ.
-   Dữ liệu: window.ZH_DATA, index.php dựng qua lib/hanyu.php:
+   Dữ liệu: window.ZH_DATA, index.html dựng qua ../hanyu/hanyu.js:
      groups  [{id, kind:'lesson'|'practice', no, title, sub, level, words:[…]}]
      sents   [{id, g, spk, vi, t:[[chữ, pinyin từng âm tiết, đậm, loại 'h'|'x'|'p']]}]
      dict    {từ: [pinyin từng âm tiết, nghĩa, STT trong 500 từ]}

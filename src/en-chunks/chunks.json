@@ -5024,6 +5024,20 @@
                             "use": "enter by force",
                             "ex": "Someone broke into our car last night.",
                             "done": false
+                        },
+                        {
+                            "c": "break something into",
+                            "vi": "chia, bẻ thành (nhiều phần)",
+                            "use": "divide into parts; not \"break into\" (enter by force)",
+                            "ex": "The teacher broke the class into four groups.",
+                            "done": false
+                        },
+                        {
+                            "c": "break something down into",
+                            "vi": "chia nhỏ, phân tích thành",
+                            "use": "split a problem or process into steps",
+                            "ex": "Let's break the project down into smaller tasks.",
+                            "done": false
                         }
                     ]
                 },

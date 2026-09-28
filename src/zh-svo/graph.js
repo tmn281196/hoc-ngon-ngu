@@ -452,7 +452,7 @@
     document.getElementById("vi").textContent = s.vi || "";
 
     // Ghi chú của câu (trang Động từ: pinyin và nghĩa của động từ đang xem).
-    // Chèn bằng innerHTML vì có <strong>/<em>; nội dung đã được data.php thoát
+    // Chèn bằng innerHTML vì có <strong>/<em>; nội dung đã được data.js thoát
     // ký tự, không phải chữ người dùng nhập.
     const noteEl = document.getElementById("snote");
     if(noteEl){

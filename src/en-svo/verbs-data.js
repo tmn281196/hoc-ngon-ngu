@@ -3,7 +3,7 @@
    Chỉ số trong DATA là cố định: OMNI[].gi trong omni-data.js trỏ thẳng vào đây,
    nên đừng đánh số lại — trang chỉ lấy một lát qua GROUPS.from/to.
 
-   Trang omnibus.php dựng lát 0..12, tức mười ba động từ đặc biệt. Ba câu chót
+   Trang omnibus.html dựng lát 0..12, tức mười ba động từ đặc biệt. Ba câu chót
    13..15 — want, smile, write — không có thanh bên nào xổ ra, nhưng giữ lại vì
    chú giải token của chúng là bộ duy nhất trong repo cho bổ ngữ mệnh đề, câu
    không tân ngữ, và thể bị động; nguyên văn ba câu đó vẫn nằm trong bảng tra ở
