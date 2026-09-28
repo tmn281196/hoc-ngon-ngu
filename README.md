@@ -48,8 +48,7 @@ rồi vào http://localhost:8000.
 ## Sửa nội dung
 
 - Khối tiếng Anh: `src/en-chunks/chunks.json`.
-- Speaking Matrix: epub, `data.json` và `img/` không nằm trong repo (nội dung sách, xem `.gitignore`), nên trang
-  `en-matrix` chỉ chạy ở máy đã dựng dữ liệu. Dựng `data.json` (thêm `--images` để chép ảnh cuốn 30 giây, cần
+- Speaking Matrix: epub không nằm trong repo. Dựng lại `data.json` (thêm `--images` để chép ảnh cuốn 30 giây, cần
   Pillow):
 
   ```bash

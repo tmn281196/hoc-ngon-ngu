@@ -2,7 +2,5 @@
 /dist/
 *.tmp
 
-# Speaking Matrix: nội dung sách có bản quyền, chỉ dựng ở máy (tools/speaking-matrix.py).
-/src/en-matrix/data.json
-/src/en-matrix/img/
+# Speaking Matrix: bản gốc còn chữ Hàn (--ko), chỉ để dịch.
 /src/en-matrix/ko.json
