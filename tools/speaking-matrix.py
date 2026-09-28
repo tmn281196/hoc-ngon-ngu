@@ -9,7 +9,7 @@ người Hàn nên chú thích gốc là tiếng Hàn; data.json không giữ ch
     ({ "tiêu đề tiếng Hàn": "tiếng Việt", "term | nghĩa tiếng Hàn": "nghĩa tiếng Việt" }); chưa dịch thì để trống.
 --mp3: tải lại danh sách MP3 của từng bài từ trang của NXB Gilbut (link QR trong sách), lưu ở
        <thư mục epub>/mp3.json; không có cờ này thì dùng lại mp3.json đã lưu. Trang phát MP3 thẳng từ máy chủ
-       Gilbut, không chép file về. Bỏ file bài giảng của tác giả (tiếng Hàn), chỉ giữ MP3 luyện tập.
+       Gilbut, không chép file về. Bỏ bài giảng của tác giả và MP3 STEP 1 (có tiếng Hàn).
 --ko: ghi thêm src/en-matrix/ko.json (bản gốc còn chữ Hàn, để dịch phần mới; không đăng).
 """
 import html, json, re, sys, zipfile
@@ -490,7 +490,7 @@ def term_vi(term):
 # Nhãn nút MP3 trên trang của NXB -> tiếng Việt; nhãn trống hay lạ thì đánh số 'Phần n'.
 MP3_LABEL = {'1분 핵심 정리': 'Tóm tắt trọng tâm', '3분 집중 훈련': 'Luyện tập tập trung',
              '2분 응용 말하기': 'Nói ứng dụng', 'INPUT': 'Luyện tập', 'OUTPUT': 'Nói',
-             'STEP 1': 'Từng câu', 'STEP 3': 'Cả đoạn', '훈련용 MP3': 'Cả bài'}
+             'STEP 3': 'Cả đoạn', '훈련용 MP3': 'Cả bài'}
 
 
 def mp3_list(url):
@@ -521,7 +521,8 @@ def add_audio(books, cache, refresh):
                     except OSError as e:
                         print(f'  ! không tải được {url}: {e}', file=sys.stderr)
                         continue
-                files = audio[url]
+                # STEP 1 (OUTPUT) là "nghe khi nhìn câu tiếng Hàn": có giọng tiếng Hàn, bỏ.
+                files = [f for f in audio[url] if f[0] != 'STEP 1']
                 d['audio'] = [[MP3_LABEL.get(l) or (l if l and not HANGUL.search(l) else ''), u] for l, u in files]
                 for i, a in enumerate(d['audio']):
                     # 'Tập n': 에피소드 n (3 phút), 01-n (2 phút)
