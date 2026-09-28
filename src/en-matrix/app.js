@@ -58,7 +58,6 @@
 
     const state = {
       mode: store.get("mode", "learn"),
-      done: new Set(store.get("done", [])),
     };
 
     // ------------------------------------------------------------ năm cuốn, danh sách bài
@@ -66,11 +65,9 @@
       $("#books").innerHTML = BOOKS.map(b => {
         const info = BOOK_INFO[b.id] || { short: b.id, desc: "" };
         const n = b.days.reduce((s, d) => s + d.all.length, 0);
-        const done = b.days.filter(d => state.done.has(d.key)).length;
         return `<button type="button" class="b-${b.id}${b.id === cur ? " on" : ""}" data-book="${b.id}">
           <span class="n">${b.days.length} bài · ${n} câu</span>
           <h2>${esc(info.short)}</h2><p>${esc(info.desc)}</p>
-          <span class="bar" title="${done}/${b.days.length} bài đã học"><i style="width:${(100 * done / b.days.length).toFixed(1)}%"></i></span>
         </button>`;
       }).join("");
     }
@@ -80,8 +77,7 @@
       el.innerHTML = book.parts.map(p => `<h3>${p.name === "INPUT" && book.id === "zero" ? "Thực hành" : p.name}</h3>` +
         p.days.map(d => `<a href="#${d.key}" class="${d.kind}"${d.key === cur ? ' aria-current="page"' : ""}>
           <span class="no">${esc(d.no)}</span>
-          <span class="t">${esc(dayTitle(d))}</span>
-          <span class="ok">${state.done.has(d.key) ? "✓" : ""}</span></a>`).join("")).join("");
+          <span class="t">${esc(dayTitle(d))}</span></a>`).join("")).join("");
       const on = el.querySelector('[aria-current="page"]');
       if (on) {
         const top = on.offsetTop - el.clientHeight / 2;
@@ -124,9 +120,7 @@
       let h = `<h2 class="dayh"><span class="no">${esc(info.short)} · ${d.kind === "test" ? "" : "Day " + esc(d.no) + " · "}${KIND[d.kind] || d.part}</span>${esc(dayTitle(d))}</h2>`;
       if (d.titleEn) h += `<p class="sub"><span class="en" lang="en">${esc(d.titleEn)}</span></p>`;
       if (d.uses) h += `<p class="sub">Dùng lại mẫu câu của INPUT: ${esc(d.uses)}</p>`;
-      const doneNow = state.done.has(d.key);
-      h += `<div class="bar2"><button type="button" class="btn${doneNow ? " done" : ""}" id="mark">${doneNow ? "✓ Đã học" : "Đánh dấu đã học"}</button>
-        <span class="sub">${d.all.length} câu</span></div>`;
+      h += `<div class="bar2"><span class="sub">${d.all.length} câu</span></div>`;
 
       if (d.items) h += `<div class="items">${d.items.map(it => itemHTML(it, ++n)).join("")}</div>`;
       (d.blocks || []).forEach((bl, bi) => {
@@ -162,11 +156,6 @@
       const main = $("#main");
       main.innerHTML = h;
 
-      $("#mark").onclick = () => {
-        if (state.done.has(d.key)) state.done.delete(d.key); else state.done.add(d.key);
-        store.set("done", [...state.done]);
-        renderDay(d); renderBooks(b.id); renderDays(b, d.key);
-      };
       if (d.script) {
         const secs = info.secs || 60;
         $("#go").onclick = () => {
