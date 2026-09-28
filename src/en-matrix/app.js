@@ -74,6 +74,8 @@
     if (synth) { pickVoice(); synth.onvoiceschanged = pickVoice; }
     function say(text, onend) {
       if (!synth) { if (onend) onend(); return; }
+      const mp3 = document.getElementById("mp3");
+      if (mp3) mp3.pause();
       const u = new SpeechSynthesisUtterance(text);
       if (voice) u.voice = voice;
       u.lang = voice ? voice.lang : "en-US";
@@ -177,6 +179,12 @@
       h += `<div class="bar2"><button type="button" class="btn" id="playall">▶ Nghe cả bài</button>
         <button type="button" class="btn${doneNow ? " done" : ""}" id="mark">${doneNow ? "✓ Đã học" : "Đánh dấu đã học"}</button>
         <span class="sub">${d.all.length} câu</span></div>`;
+      // MP3 của sách, phát thẳng từ máy chủ NXB Gilbut (link QR in trong sách).
+      if (d.audio && d.audio.length) {
+        h += `<div class="audio"><span class="lbl">MP3 của sách</span>` +
+          d.audio.map(([l, u], i) => `<button type="button" class="btn" data-mp3="${i}">♪ ${esc(l)}</button>`).join("") +
+          `<audio id="mp3" controls preload="none" hidden></audio></div>`;
+      }
 
       if (d.items) h += `<div class="items">${d.items.map(it => itemHTML(it, ++n)).join("")}</div>`;
       (d.blocks || []).forEach((bl, bi) => {
@@ -213,6 +221,18 @@
       const main = $("#main");
       main.innerHTML = h;
 
+      const mp3 = $("#mp3");
+      if (mp3) {
+        main.querySelectorAll("[data-mp3]").forEach(btn => btn.onclick = () => {
+          const src = d.audio[+btn.dataset.mp3][1];
+          main.querySelectorAll("[data-mp3]").forEach(x => x.classList.toggle("on", x === btn));
+          stop();
+          mp3.hidden = false;
+          if (mp3.getAttribute("src") !== src) mp3.src = src;
+          mp3.play().catch(() => {});
+        });
+        mp3.addEventListener("play", () => stop());
+      }
       $("#playall").onclick = () => {
         if ($("#playall").classList.contains("on")) { stop(); return; }
         playList([...main.querySelectorAll(".item, .pic")]);

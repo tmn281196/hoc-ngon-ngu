@@ -1,12 +1,15 @@
 """Dựng src/en-matrix/data.json từ năm cuốn epub Speaking Matrix (Zero, 30s, 1m, 2m, 3m).
 
-    python tools/speaking-matrix.py <thư mục epub> [--ko]
+    python tools/speaking-matrix.py <thư mục epub> [--ko] [--mp3]
 
 Chỉ lấy phần luyện nói (câu tiếng Anh, cách ngắt khối); bỏ phần lý thuyết, lời dẫn, bài giải thích. Sách viết cho
 người Hàn nên chú thích gốc là tiếng Hàn; data.json không giữ chữ Hàn nào:
   - nghĩa câu và nghĩa từng khối nằm ở src/en-matrix/vi.json, khóa là câu tiếng Anh;
   - tên bài, tên mục, ghi chú từ vựng được thay bằng tiếng Việt lúc dựng, tra từ <thư mục epub>/vi-titles.json
     ({ "tiêu đề tiếng Hàn": "tiếng Việt", "term | nghĩa tiếng Hàn": "nghĩa tiếng Việt" }); chưa dịch thì để trống.
+--mp3: tải lại danh sách MP3 của từng bài từ trang của NXB Gilbut (link QR trong sách), lưu ở
+       <thư mục epub>/mp3.json; không có cờ này thì dùng lại mp3.json đã lưu. Trang phát MP3 thẳng từ máy chủ
+       Gilbut, không chép file về. Bỏ file bài giảng của tác giả (tiếng Hàn), chỉ giữ MP3 luyện tập.
 --ko: ghi thêm src/en-matrix/ko.json (bản gốc còn chữ Hàn, để dịch phần mới; không đăng).
 """
 import html, json, re, sys, zipfile
@@ -436,6 +439,9 @@ def build_book(zf, bid):
         m = next((e.text for e in els[:8] if re.match(r'^:?\s*:?\s*INPUT\s*:|^Day \d+ \+', e.text)), None)
         if m:
             day['uses'] = clean(re.sub(r'^.*?INPUT\s*:', '', m))
+        link = re.search(r'href="(https?://[^"]+)"', zf.read('OEBPS/Text/' + f).decode('utf-8'))
+        if link:
+            day['mp3page'] = link.group(1)
         day.update(body)
         n = len(day.get('items', [])) + sum(len(b['items']) for b in day.get('blocks', []))
         if not n:
@@ -462,6 +468,7 @@ def main():
     if '--ko' in sys.argv:
         with open(OUT / 'ko.json', 'w', encoding='utf-8') as fp:
             json.dump(books, fp, ensure_ascii=False, separators=(',', ':'))
+    add_audio(books, src / 'mp3.json', '--mp3' in sys.argv)
     tf = src / 'vi-titles.json'
     titles = json.loads(tf.read_text(encoding='utf-8')) if tf.exists() else {}
     strip_korean(books, titles)
@@ -478,6 +485,51 @@ def term_vi(term):
     for k, v in TERM_KO.items():
         term = term.replace(k, v)
     return term
+
+
+# Nhãn nút MP3 trên trang của NXB -> tiếng Việt; nhãn trống hay lạ thì đánh số 'Phần n'.
+MP3_LABEL = {'1분 핵심 정리': 'Tóm tắt trọng tâm', '3분 집중 훈련': 'Luyện tập tập trung',
+             '2분 응용 말하기': 'Nói ứng dụng', 'INPUT': 'Luyện tập', 'OUTPUT': 'Nói',
+             'STEP 1': 'Từng câu', 'STEP 3': 'Cả đoạn', '훈련용 MP3': 'Cả bài'}
+
+
+def mp3_list(url):
+    """Trang MP3 của một bài -> [[nhãn, url tuyệt đối]], bỏ bài giảng (L01.mp3, InL01.mp3, OutL01.mp3)."""
+    import urllib.request
+    from urllib.parse import urljoin
+    with urllib.request.urlopen(url, timeout=30) as r:
+        page, final = r.read().decode('utf-8', 'replace'), r.geturl()
+    out = []
+    for href, label in re.findall(r'<a href="([^"]+\.mp3)"[^>]*>(.*?)</a>', page, re.S):
+        if re.match(r'^(In|Out)?L\d', href.rsplit('/', 1)[-1]):
+            continue
+        out.append([clean(html.unescape(re.sub(r'<[^>]+>', '', label))), urljoin(final, href)])
+    return out
+
+
+def add_audio(books, cache, refresh):
+    audio = json.loads(cache.read_text(encoding='utf-8')) if cache.exists() else {}
+    for b in books:
+        for p in b['parts']:
+            for d in p['days']:
+                url = d.pop('mp3page', None)
+                if not url:
+                    continue
+                if refresh or url not in audio:
+                    try:
+                        audio[url] = mp3_list(url)
+                    except OSError as e:
+                        print(f'  ! không tải được {url}: {e}', file=sys.stderr)
+                        continue
+                files = audio[url]
+                d['audio'] = [[MP3_LABEL.get(l) or (l if l and not HANGUL.search(l) else ''), u] for l, u in files]
+                for i, a in enumerate(d['audio']):
+                    # 'Tập n': 에피소드 n (3 phút), 01-n (2 phút)
+                    m = re.match(r'에피소드\s*(\d+)$|\d+-(\d+)$', files[i][0])
+                    if m:
+                        a[0] = f'Tập {m.group(1) or m.group(2)}'
+                    a[0] = a[0] or (f'Tập {m.group(1)}' if m else f'Phần {i + 1}' if len(files) > 1 else 'Cả bài')
+    cache.write_text(json.dumps(audio, ensure_ascii=False, indent=1), encoding='utf-8')
 
 
 def strip_korean(books, vi):
