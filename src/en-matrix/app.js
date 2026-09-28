@@ -7,7 +7,7 @@
              script?: { en } }
      block: { title, kind?: key|drill|apply, items: [item] }
      item: { en, title?, tag?, chunks?, words?, notes?: [[term, nghĩa]], img? }
-   vi.json: { s: { en: { vi, c?: [nghĩa từng khối], w?: [nghĩa từng từ] } } }
+   vi.json: { s: { en: { vi, c?: [nghĩa từng khối], cc?: { "khối|khối": [..] }, w?: [nghĩa từng từ] } } }
    Tiêu đề đã là tiếng Việt sẵn trong data.json (trống nếu chưa dịch). */
 (function () {
   "use strict";
@@ -155,7 +155,8 @@
       if (it.tag) h += `<span class="tag">${esc(it.tag)}</span> `;
       if (it.img) h += `<div class="imgs">${it.img.map(s => `<img src="img/${esc(s.replace(/\.\w+$/, ""))}.webp" alt="" loading="lazy">`).join("")}</div>`;
       if (it.words) h += chunkRow(it.words, v.w, "words");
-      if (it.chunks && it.chunks.length > 1) h += chunkRow(it.chunks, v.c);
+      // Cùng một câu có thể được ngắt khối khác nhau ở hai chỗ: cc giữ nghĩa theo từng cách ngắt.
+      if (it.chunks && it.chunks.length > 1) h += chunkRow(it.chunks, (v.cc && v.cc[it.chunks.join("|")]) || v.c);
       else h += `<p class="en-s">${esc(it.en)}</p>`;
       h += `<p class="vi-s">${esc(v.vi || "")} <span class="hint">— bấm để mở</span></p>`;
       if (it.notes) h += `<div class="notes">${it.notes.map(([t, k]) => `<span><b>${esc(t)}</b> ${esc(k)}</span>`).join("")}</div>`;
