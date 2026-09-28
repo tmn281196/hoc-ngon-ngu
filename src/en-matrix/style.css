@@ -119,9 +119,6 @@ main:focus{outline:none}
 .btn:hover{background:var(--panel2)}
 .btn.on{background:var(--kb); color:var(--k); border-color:var(--k)}
 .btn.done{color:#8FD67A; border-color:#8FD67A}
-.audio{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:-6px 0 18px; padding:10px 12px; border:1px solid var(--line); background:var(--panel)}
-.audio .lbl{color:var(--muted); font:500 10.5px "IBM Plex Mono", monospace; letter-spacing:.12em; text-transform:uppercase; margin-right:4px}
-.audio audio{flex:1 1 100%; width:100%; height:36px; margin-top:4px; color-scheme:dark}
 .nav{display:flex; justify-content:space-between; gap:8px; margin-top:26px}
 .nav a{flex:1; max-width:48%; padding:12px 14px; border:1px solid var(--line); background:var(--panel); color:var(--muted); text-decoration:none; font-size:13.5px}
 .nav a:hover{background:var(--panel2); color:var(--ink)}
