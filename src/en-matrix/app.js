@@ -14,7 +14,7 @@
 
   const BOOK_INFO = {
     zero: { short: "Zero", desc: "Câu ba bốn chữ: tư duy theo trật tự tiếng Anh, từng từ rồi từng khối.", secs: 0 },
-    "30s": { short: "30 giây", desc: "Mẫu câu cơ bản có tranh, rồi ghép thành bài nói 30 giây.", secs: 30 },
+    "30s": { short: "30 giây", desc: "Mẫu câu cơ bản, rồi ghép thành bài nói 30 giây.", secs: 30 },
     "1m": { short: "1 phút", desc: "Cụm diễn đạt đời thường; nối lại thành bài nói 1 phút.", secs: 60 },
     "2m": { short: "2 phút", desc: "Mỗi bài sáu mẩu chuyện ngắn; ráp thành bài nói 2 phút.", secs: 120 },
     "3m": { short: "3 phút", desc: "Hai chủ đề một ngày; trả lời câu hỏi mở trong 3 phút.", secs: 180 },
@@ -58,57 +58,8 @@
 
     const state = {
       mode: store.get("mode", "learn"),
-      slow: store.get("slow", false),
       done: new Set(store.get("done", [])),
     };
-
-    // ------------------------------------------------------------ giọng đọc
-    const synth = window.speechSynthesis;
-    let voice = null, playToken = 0;
-    function pickVoice() {
-      if (!synth) return;
-      const vs = synth.getVoices().filter(v => /^en[-_]/i.test(v.lang));
-      const score = v => (/en[-_]US/i.test(v.lang) ? 4 : 0) + (/natural|neural|online/i.test(v.name) ? 3 : 0) + (/google/i.test(v.name) ? 2 : 0);
-      voice = vs.sort((a, b) => score(b) - score(a))[0] || null;
-    }
-    if (synth) { pickVoice(); synth.onvoiceschanged = pickVoice; }
-    function say(text, onend) {
-      if (!synth) { if (onend) onend(); return; }
-      const u = new SpeechSynthesisUtterance(text);
-      if (voice) u.voice = voice;
-      u.lang = voice ? voice.lang : "en-US";
-      u.rate = state.slow ? 0.72 : 0.95;
-      if (onend) { u.onend = onend; u.onerror = onend; }
-      synth.speak(u);
-    }
-    function stop() {
-      playToken++;
-      if (synth) synth.cancel();
-      document.querySelectorAll(".playing, .speaking").forEach(e => e.classList.remove("playing", "speaking"));
-      const all = $("#playall"); if (all) { all.classList.remove("on"); all.textContent = "▶ Nghe cả bài"; }
-    }
-    function speakEl(el, text) {
-      stop();
-      el.classList.add("speaking");
-      say(text, () => el.classList.remove("speaking"));
-    }
-    // Đọc lần lượt từng câu, dừng một nhịp giữa hai câu cho người học nói theo.
-    function playList(els) {
-      stop();
-      const tok = playToken, all = $("#playall");
-      if (all) { all.classList.add("on"); all.textContent = "■ Dừng"; }
-      let i = 0;
-      const next = () => {
-        if (tok !== playToken) return;
-        els.forEach(e => e.classList.remove("playing"));
-        if (i >= els.length) { stop(); return; }
-        const el = els[i++];
-        el.classList.add("playing");
-        el.scrollIntoView({ block: "nearest", behavior: "smooth" });
-        say(el.dataset.en, () => setTimeout(next, state.slow ? 1400 : 900));
-      };
-      next();
-    }
 
     // ------------------------------------------------------------ năm cuốn, danh sách bài
     function renderBooks(cur) {
@@ -142,7 +93,7 @@
     function chunkRow(ens, vis, cls) {
       return `<div class="chunks ${cls || ""}">` + ens.map((e, i) => {
         const g = vis && vis[i] ? vis[i] : "";
-        return `<button type="button" class="ck" data-en="${esc(e)}"><span class="e">${esc(e)}</span>` +
+        return `<button type="button" class="ck"><span class="e">${esc(e)}</span>` +
           (g ? `<span class="g">${esc(g)}</span>` : "") +
           `</button>`;
       }).join("") + "</div>";
@@ -159,14 +110,14 @@
       else h += `<p class="en-s">${esc(it.en)}</p>`;
       h += `<p class="vi-s">${esc(v.vi || "")} <span class="hint">— bấm để mở</span></p>`;
       if (it.notes) h += `<div class="notes">${it.notes.map(([t, k]) => `<span><b>${esc(t)}</b> ${esc(k)}</span>`).join("")}</div>`;
-      h += `</div><button type="button" class="play" title="Nghe câu này" aria-label="Nghe câu này">▶</button></div></div>`;
+      h += `</div></div></div>`;
       return h;
     }
 
     // ------------------------------------------------------------ một bài
     let timer = 0;
     function renderDay(d) {
-      stop(); clearInterval(timer);
+      clearInterval(timer);
       const b = d.book, info = BOOK_INFO[b.id] || {};
       document.body.className = "b-" + b.id + (state.mode === "drill" ? " drill" : "");
       let n = 0;
@@ -174,8 +125,7 @@
       if (d.titleEn) h += `<p class="sub"><span class="en" lang="en">${esc(d.titleEn)}</span></p>`;
       if (d.uses) h += `<p class="sub">Dùng lại mẫu câu của INPUT: ${esc(d.uses)}</p>`;
       const doneNow = state.done.has(d.key);
-      h += `<div class="bar2"><button type="button" class="btn" id="playall">▶ Nghe cả bài</button>
-        <button type="button" class="btn${doneNow ? " done" : ""}" id="mark">${doneNow ? "✓ Đã học" : "Đánh dấu đã học"}</button>
+      h += `<div class="bar2"><button type="button" class="btn${doneNow ? " done" : ""}" id="mark">${doneNow ? "✓ Đã học" : "Đánh dấu đã học"}</button>
         <span class="sub">${d.all.length} câu</span></div>`;
 
       if (d.items) h += `<div class="items">${d.items.map(it => itemHTML(it, ++n)).join("")}</div>`;
@@ -198,8 +148,7 @@
         const vi = (d.items || []).map(it => it.v.vi || "").join(" ");
         const secs = info.secs || 60;
         h += `<section class="script"><h3>Cả bài — tự nói trong ${secs < 60 ? secs + " giây" : secs / 60 + " phút"}</h3>
-          <div class="bar2"><button type="button" class="btn" id="go"><span class="timer" id="clock">${fmt(secs)}</span> Bắt đầu</button>
-          <button type="button" class="btn" id="playscript">▶ Nghe cả đoạn</button></div>
+          <div class="bar2"><button type="button" class="btn" id="go"><span class="timer" id="clock">${fmt(secs)}</span> Bắt đầu</button></div>
           <p class="vi-p">${esc(vi)}</p>
           <p class="en-p" lang="en" data-en="${esc(d.script.en)}">${esc(d.script.en)}</p></section>`;
       }
@@ -213,10 +162,6 @@
       const main = $("#main");
       main.innerHTML = h;
 
-      $("#playall").onclick = () => {
-        if ($("#playall").classList.contains("on")) { stop(); return; }
-        playList([...main.querySelectorAll(".item, .pic")]);
-      };
       $("#mark").onclick = () => {
         if (state.done.has(d.key)) state.done.delete(d.key); else state.done.add(d.key);
         store.set("done", [...state.done]);
@@ -224,7 +169,6 @@
       };
       if (d.script) {
         const secs = info.secs || 60;
-        $("#playscript").onclick = () => speakEl(main.querySelector(".script"), d.script.en);
         $("#go").onclick = () => {
           clearInterval(timer);
           const end = Date.now() + secs * 1000, clock = $("#clock");
@@ -239,20 +183,10 @@
     }
     const fmt = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
 
-    // Bấm trong bài: khối → nghe (và mở khi đang Luyện); ▶ → nghe cả câu; câu bị che → mở.
+    // Bấm trong bài (khi đang Luyện): khối, thẻ, câu bị che → mở.
     $("#main").addEventListener("click", e => {
-      const ck = e.target.closest(".ck");
-      if (ck) { ck.classList.add("open"); speakEl(ck, ck.dataset.en); return; }
-      const pic = e.target.closest(".pic");
-      if (pic) { pic.classList.add("open"); speakEl(pic, pic.dataset.en); return; }
-      const play = e.target.closest(".play");
-      if (play) {
-        const it = play.closest(".item");
-        it.classList.add("open");
-        it.querySelectorAll(".ck").forEach(c => c.classList.add("open"));
-        speakEl(it, it.dataset.en);
-        return;
-      }
+      const ck = e.target.closest(".ck, .pic");
+      if (ck) { ck.classList.add("open"); return; }
       const sc = e.target.closest(".script .en-p");
       if (sc) { sc.parentElement.classList.add("open"); return; }
       const it = e.target.closest(".item");
@@ -262,7 +196,6 @@
     // ------------------------------------------------------------ tìm
     const fold = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/[’']/g, "'");
     function renderSearch(q) {
-      stop();
       const f = fold(q), hits = [];
       DAYS.forEach(d => d.all.forEach((it, i) => {
         if (hits.length < 200 && (fold(it.en).includes(f) || fold(it.v.vi || "").includes(f))) hits.push([d, it, i + 1]);
@@ -289,19 +222,12 @@
     // ------------------------------------------------------------ điều khiển
     function syncControls() {
       document.querySelectorAll("#mode button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)));
-      document.querySelectorAll("#opts button").forEach(b => b.setAttribute("aria-pressed", String(!!state[b.dataset.opt])));
       document.body.classList.toggle("drill", state.mode === "drill");
     }
     $("#mode").addEventListener("click", e => {
       const b = e.target.closest("button"); if (!b) return;
       state.mode = b.dataset.mode; store.set("mode", state.mode);
       document.querySelectorAll(".open").forEach(x => x.classList.remove("open"));
-      syncControls();
-    });
-    $("#opts").addEventListener("click", e => {
-      const b = e.target.closest("button"); if (!b) return;
-      const k = b.dataset.opt;
-      state[k] = !state[k]; store.set(k, state[k]);
       syncControls();
     });
     $("#books").addEventListener("click", e => {
@@ -313,7 +239,7 @@
     document.addEventListener("keydown", e => {
       if (e.target.matches("input, textarea")) { if (e.key === "Escape") { e.target.value = ""; e.target.blur(); route(); } return; }
       if (e.key === "/") { e.preventDefault(); $("#q").focus(); return; }
-      // Space khi đang Luyện: mở khối (hoặc câu) kế tiếp còn che, và đọc nó.
+      // Space khi đang Luyện: mở khối (hoặc câu) kế tiếp còn che.
       if (e.key === " " && state.mode === "drill") {
         const nx = [...document.querySelectorAll("#main .ck:not(.open), #main .item:not(.open) .en-s, #main .pic:not(.open)")][0];
         if (!nx) return;
@@ -321,7 +247,6 @@
         const host = nx.classList.contains("en-s") ? nx.closest(".item") : nx;
         host.classList.add("open");
         nx.scrollIntoView({ block: "nearest", behavior: "smooth" });
-        speakEl(host, host.dataset.en);
       }
     });
 
@@ -338,7 +263,7 @@
       document.title = dayTitle(d) + " · Ma trận nói tiếng Anh";
       if (n) {
         const el = document.getElementById("it-" + n);
-        if (el) { el.scrollIntoView({ block: "center" }); el.classList.add("playing"); setTimeout(() => el.classList.remove("playing"), 1600); }
+        if (el) { el.scrollIntoView({ block: "center" }); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1600); }
       } else if (window.scrollY > $(".layout").offsetTop) {
         window.scrollTo(0, $(".layout").offsetTop - 60);
       }
