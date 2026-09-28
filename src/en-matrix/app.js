@@ -151,42 +151,12 @@
 
     }
 
-    // ------------------------------------------------------------ tìm
-    const fold = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/[’']/g, "'");
-    function renderSearch(q) {
-      const f = fold(q), hits = [];
-      DAYS.forEach(d => d.all.forEach((it, i) => {
-        if (hits.length < 200 && (fold(it.en).includes(f) || fold(it.v.vi || "").includes(f))) hits.push([d, it, i + 1]);
-      }));
-      const mark = s => {
-        const k = fold(s).indexOf(f);
-        return k < 0 ? esc(s) : esc(s.slice(0, k)) + "<mark>" + esc(s.slice(k, k + q.length)) + "</mark>" + esc(s.slice(k + q.length));
-      };
-      $("#main").innerHTML = `<h2 class="dayh"><span class="no">Tìm “${esc(q)}”</span>${hits.length >= 200 ? "200+" : hits.length} câu</h2>` +
-        (hits.length ? `<div class="items">${hits.map(([d, it, i]) => `<a class="item hit b-${d.book.id}" href="#${d.key}/${i}">
-          <span class="src">${esc((BOOK_INFO[d.book.id] || {}).short)} · Day ${esc(d.no)} · ${esc(dayTitle(d))}</span>
-          <p class="en-s">${mark(it.en)}</p><p class="vi-s">${mark(it.v.vi || "")}</p></a>`).join("")}</div>`
-          : `<p class="empty">Không có câu nào khớp.</p>`);
-    }
-    let qt = 0;
-    $("#q").addEventListener("input", () => {
-      clearTimeout(qt);
-      qt = setTimeout(() => {
-        const q = $("#q").value.trim();
-        if (q.length >= 2) renderSearch(q); else route();
-      }, 150);
-    });
-
     // ------------------------------------------------------------ điều khiển
     $("#books").addEventListener("click", e => {
       const b = e.target.closest("button[data-book]"); if (!b) return;
       const book = BOOKS.find(x => x.id === b.dataset.book);
       const last = store.get("last:" + book.id, null);
       location.hash = last && DAYS.some(d => d.key === last) ? last : book.days[0].key;
-    });
-    document.addEventListener("keydown", e => {
-      if (e.target.matches("input, textarea")) { if (e.key === "Escape") { e.target.value = ""; e.target.blur(); route(); } return; }
-      if (e.key === "/") { e.preventDefault(); $("#q").focus(); }
     });
 
     // ------------------------------------------------------------ định tuyến: #book/day[/câu]
@@ -204,10 +174,10 @@
         const el = document.getElementById("it-" + n);
         if (el) { el.scrollIntoView({ block: "center" }); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1600); }
       } else if (window.scrollY > $(".layout").offsetTop) {
-        window.scrollTo(0, $(".layout").offsetTop - 60);
+        window.scrollTo(0, $(".layout").offsetTop - 16);
       }
     }
-    window.addEventListener("hashchange", () => { $("#q").value = ""; route(); });
+    window.addEventListener("hashchange", route);
     route();
   }
 })();
