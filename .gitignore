@@ -1,6 +1,3 @@
-# Thư mục dựng của bản PHP cũ, nay không dùng nữa.
+# Thư mục dựng của bản PHP cũ, không dùng nữa.
 /dist/
 *.tmp
-
-# Speaking Matrix: bản gốc còn chữ Hàn (--ko), chỉ để dịch.
-/src/en-matrix/ko.json
