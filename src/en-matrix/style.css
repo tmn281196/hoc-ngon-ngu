@@ -37,15 +37,6 @@ h1{
 h1 em{font-style:normal; color:var(--k)}
 .lede{margin:0; color:var(--muted); font-size:16px; max-width:980px}
 .lede b{color:var(--ink); font-weight:600}
-.howto{margin-top:16px; max-width:980px; border:1px solid var(--line); background:var(--panel)}
-.howto summary{
-  cursor:pointer; padding:9px 13px; color:var(--muted); list-style:none;
-  font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
-}
-.howto summary::before{content:"+ "} .howto[open] summary::before{content:"\2212 "}
-.howto summary:hover{color:var(--ink)}
-.howto ul{margin:0; padding:0 16px 12px 34px; color:var(--muted); font-size:14px}
-.howto strong{color:var(--ink)}
 
 /* ---- năm cuốn ---- */
 .books{
