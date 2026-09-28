@@ -56,9 +56,6 @@
     });
     $("#total").textContent = total.toLocaleString("vi-VN");
 
-    const state = {
-      mode: store.get("mode", "learn"),
-    };
 
     // ------------------------------------------------------------ năm cuốn, danh sách bài
     function renderBooks(cur) {
@@ -89,14 +86,14 @@
     function chunkRow(ens, vis, cls) {
       return `<div class="chunks ${cls || ""}">` + ens.map((e, i) => {
         const g = vis && vis[i] ? vis[i] : "";
-        return `<button type="button" class="ck"><span class="e">${esc(e)}</span>` +
+        return `<span class="ck"><span class="e">${esc(e)}</span>` +
           (g ? `<span class="g">${esc(g)}</span>` : "") +
-          `</button>`;
+          `</span>`;
       }).join("") + "</div>";
     }
     function itemHTML(it, n) {
       const v = it.v;
-      let h = `<div class="item" data-en="${esc(it.en)}" id="it-${n}"><div class="top"><span class="n">${n}</span>`;
+      let h = `<div class="item" id="it-${n}"><div class="top"><span class="n">${n}</span>`;
       h += `<div style="flex:1;min-width:0">`;
       if (it.title) h += `<h4>${esc(tr(it.title))}</h4>`;
       if (it.tag) h += `<span class="tag">${esc(it.tag)}</span> `;
@@ -104,7 +101,7 @@
       // Cùng một câu có thể được ngắt khối khác nhau ở hai chỗ: cc giữ nghĩa theo từng cách ngắt.
       if (it.chunks && it.chunks.length > 1) h += chunkRow(it.chunks, (v.cc && v.cc[it.chunks.join("|")]) || v.c);
       else h += `<p class="en-s">${esc(it.en)}</p>`;
-      h += `<p class="vi-s">${esc(v.vi || "")} <span class="hint">— bấm để mở</span></p>`;
+      h += `<p class="vi-s">${esc(v.vi || "")}</p>`;
       if (it.notes) h += `<div class="notes">${it.notes.map(([t, k]) => `<span><b>${esc(t)}</b> ${esc(k)}</span>`).join("")}</div>`;
       h += `</div></div></div>`;
       return h;
@@ -113,7 +110,7 @@
     // ------------------------------------------------------------ một bài
     function renderDay(d) {
       const b = d.book, info = BOOK_INFO[b.id] || {};
-      document.body.className = "b-" + b.id + (state.mode === "drill" ? " drill" : "");
+      document.body.className = "b-" + b.id;
       let n = 0;
       let h = `<h2 class="dayh"><span class="no">${esc(info.short)} · ${d.kind === "test" ? "" : "Day " + esc(d.no) + " · "}${KIND[d.kind] || d.part}</span>${esc(dayTitle(d))}</h2>`;
       if (d.titleEn) h += `<p class="sub"><span class="en" lang="en">${esc(d.titleEn)}</span></p>`;
@@ -126,9 +123,9 @@
         if (bl.kind === "key") {
           h += `<div class="pics">${bl.items.map(it => {
             n++;
-            return `<button type="button" class="pic" id="it-${n}" data-en="${esc(it.en)}">` +
+            return `<div class="pic" id="it-${n}">` +
               `<span class="e">${esc(it.en)}</span><span class="g">${esc(it.v.vi || "")}</span>` +
-              `</button>`;
+              `</div>`;
           }).join("")}</div>`;
         } else {
           h += `<div class="items">${bl.items.map(it => itemHTML(it, ++n)).join("")}</div>`;
@@ -140,7 +137,7 @@
         const vi = (d.items || []).map(it => it.v.vi || "").join(" ");
         h += `<section class="script"><h3>Cả bài</h3>
           <p class="vi-p">${esc(vi)}</p>
-          <p class="en-p" lang="en" data-en="${esc(d.script.en)}">${esc(d.script.en)}</p></section>`;
+          <p class="en-p" lang="en">${esc(d.script.en)}</p></section>`;
       }
 
       const i = DAYS.indexOf(d), prev = DAYS[i - 1], next = DAYS[i + 1];
@@ -153,16 +150,6 @@
       main.innerHTML = h;
 
     }
-
-    // Bấm trong bài (khi đang Luyện): khối, thẻ, câu bị che → mở.
-    $("#main").addEventListener("click", e => {
-      const ck = e.target.closest(".ck, .pic");
-      if (ck) { ck.classList.add("open"); return; }
-      const sc = e.target.closest(".script .en-p");
-      if (sc) { sc.parentElement.classList.add("open"); return; }
-      const it = e.target.closest(".item");
-      if (it && document.body.classList.contains("drill")) it.classList.add("open");
-    });
 
     // ------------------------------------------------------------ tìm
     const fold = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/[’']/g, "'");
@@ -191,16 +178,6 @@
     });
 
     // ------------------------------------------------------------ điều khiển
-    function syncControls() {
-      document.querySelectorAll("#mode button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)));
-      document.body.classList.toggle("drill", state.mode === "drill");
-    }
-    $("#mode").addEventListener("click", e => {
-      const b = e.target.closest("button"); if (!b) return;
-      state.mode = b.dataset.mode; store.set("mode", state.mode);
-      document.querySelectorAll(".open").forEach(x => x.classList.remove("open"));
-      syncControls();
-    });
     $("#books").addEventListener("click", e => {
       const b = e.target.closest("button[data-book]"); if (!b) return;
       const book = BOOKS.find(x => x.id === b.dataset.book);
@@ -209,16 +186,7 @@
     });
     document.addEventListener("keydown", e => {
       if (e.target.matches("input, textarea")) { if (e.key === "Escape") { e.target.value = ""; e.target.blur(); route(); } return; }
-      if (e.key === "/") { e.preventDefault(); $("#q").focus(); return; }
-      // Space khi đang Luyện: mở khối (hoặc câu) kế tiếp còn che.
-      if (e.key === " " && state.mode === "drill") {
-        const nx = [...document.querySelectorAll("#main .ck:not(.open), #main .item:not(.open) .en-s, #main .pic:not(.open)")][0];
-        if (!nx) return;
-        e.preventDefault();
-        const host = nx.classList.contains("en-s") ? nx.closest(".item") : nx;
-        host.classList.add("open");
-        nx.scrollIntoView({ block: "nearest", behavior: "smooth" });
-      }
+      if (e.key === "/") { e.preventDefault(); $("#q").focus(); }
     });
 
     // ------------------------------------------------------------ định tuyến: #book/day[/câu]
@@ -240,7 +208,6 @@
       }
     }
     window.addEventListener("hashchange", () => { $("#q").value = ""; route(); });
-    syncControls();
     route();
   }
 })();
